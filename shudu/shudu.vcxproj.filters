@@ -21,9 +21,18 @@
     <ClCompile Include="InputHandler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="FinalMaker.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputHandler.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="progress.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
