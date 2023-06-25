@@ -1,10 +1,21 @@
 #include <iostream>
 #include "InputHandler.h"
-#include "FinalMaker.cpp"
 #include <fstream>
 #include "progress.h"
+#include <algorithm>
 using namespace std;
 
+inline void output(fstream& f, int* line, int* offset) {
+	for (int i = 0; i < 9; i++) {
+		int start = offset[i];
+		f << line[start];
+		for (int j = start + 1; j < start + 9; j++) {
+			f << " " << line[j % 9];
+		}
+		f << endl;
+	}
+	f << endl;
+}
 
 void InputHandler::check(int argc, char** argv) {
 	/*只有一个参数:
