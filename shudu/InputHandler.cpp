@@ -41,7 +41,7 @@ void InputHandler::check(int argc, char** argv) {
 		}
 		else if (parameter1 == "-s") {
 			fstream infile(parameter2, ios::in);
-			fstream outfile("suduku.txt", ios::out);
+			fstream outfile(AnsPath, ios::out);
 			if (!infile.is_open()) {
 				cout << "文件打开失败！" << endl;
 				return;
@@ -110,7 +110,28 @@ void InputHandler::check(int argc, char** argv) {
 				}
 			}
 			else if (arg2 == "-m") {
-
+				//选择难度的时候，分为3档
+				/*第一档：挖空在5-18之间(因此不能要求唯一解)
+				  第二档：挖空在18-32之间
+				  第三档：挖空在33-64之间
+				  */
+				int level = isNum(param2);
+				
+				if (level == 1) {
+					generator.generate(n, 5, 17);
+				}
+				else if(level==2)
+				{
+					generator.generate(n, 18, 32);
+				}
+				else if (level == 3) {
+					generator.generate(n, 33, 64);
+				}
+				else {
+					cout << "输入的难度不符合规范，应为1-3之间的整数！" << endl;
+					return;
+				}
+				
 			}
 			else {
 				cout << "输入有误！存在未定义的选项" << endl;
@@ -242,7 +263,7 @@ void InputHandler::getFinal(int num) {
 	bar.show();
 
 	//Open output file
-	fstream outfile("final.txt", ios::out);
+	fstream outfile(FinalPath, ios::out);
 	if (!outfile.is_open()) {
 		cout << "文件打开失败！" << endl;
 		return;

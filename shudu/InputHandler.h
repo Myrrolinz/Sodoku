@@ -13,8 +13,8 @@ public:
 	SolverHandler board;
 private:
 	int isNum(const string& s);
-	string FinalPath = "C:/Users/civilizwa/source/repos/shudu/shudu/final.txt";//存储终局
-	string AnsPath = "C:/Users/civilizwa/source/repos/shudu/shudu/ans.txt";//存储求解答案
-	string QuexPath = "C:/Users/civilizwa/source/repos/shudu/shudu/question.txt";//存储数独题目
+	string FinalPath = "final.txt";//存储终局
+	string AnsPath = "ans.txt";//存储求解答案
+	string QuexPath = "question.txt";//存储数独题目
 };
 
