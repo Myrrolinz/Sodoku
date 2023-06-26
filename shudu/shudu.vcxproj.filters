@@ -24,6 +24,12 @@
     <ClCompile Include="progress.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SolveHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputHandler.h">
@@ -33,6 +39,12 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="timer.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SolveHandler.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateHandler.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

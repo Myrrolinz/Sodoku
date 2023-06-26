@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GenerateHandler.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="progress.cpp" />
+    <ClCompile Include="SolveHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GenerateHandler.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="progress.h" />
+    <ClInclude Include="SolveHandler.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
