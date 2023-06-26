@@ -5,6 +5,7 @@
 #include "timer.h"
 #include <algorithm>
 #include <vector>
+#include <random>
 #include "SolveHandler.h"
 using namespace std;
 
@@ -29,5 +30,7 @@ public:
 	bool solveSudoku(vector<std::vector<int>>& board);
 	// 生成数独游戏题目
 	void generateSudoku(vector<std::vector<int>>& board);
+	//生成在min-max范围间的随机数
+	int generateRandomNumber(int min, int max);
 
 };

@@ -21,9 +21,12 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion =
 	input(infile);//将终局读入matrix数组
 	infile.close();
 	if (isUnion == false) {
-		current_HoleNum = beginNum;
 		for (int i = 0; i < num; i++) {
+			//在范围内随机生成挖空个数
+			current_HoleNum = generateRandomNumber(beginNum, endNum);
+			//挖current_HoleNum个洞
 			holehole();
+			//随机挑选一个终局
 			SelectFinal();
 		
 			//将终局挖空后的结果输出到文件
@@ -50,9 +53,10 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion =
 	}
 	else {
 		//使用回溯法生成唯一解的数独
-		current_HoleNum = beginNum;
 		vector<std::vector<int>> board;
 		for (int t = 0; t < num; t++) {
+			//在范围内随机生成挖空个数
+			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			generateSudoku(board);
 			holehole();
 			//std::cout << std::endl << "数独游戏题目 #" << i + 1 << ":" << std::endl;
@@ -68,6 +72,16 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion =
 	
 }
 
+int Generatehandler::generateRandomNumber(int min, int max) {
+	// 设置随机数引擎和分布
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(min, max);
+
+	// 生成随机数
+	int randomNumber = dis(gen);
+	return randomNumber;
+}
 void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) {
 	for (int row = 0; row < 9; row++) {
 		if (holeboard[row][0] == 1) {
