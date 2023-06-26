@@ -101,9 +101,118 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
-				
+				if (begin_num <= 0 || end_num <= 0) {
+					cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入！" << endl;
+					return;
+				}
+				else {
+					generator.generate(n, begin_num, end_num);
+					cout << "已生成" + parm1 + "个数独游戏，挖空范围在["<<begin_num<<","<<end_num<<"]之间" << endl;
+				}
+			}
+			else if (arg2 == "-m") {
+
+			}
+			else {
+				cout << "输入有误！存在未定义的选项" << endl;
+				return;
 			}
 		}
+	}
+	else if (argc == 6) {
+		//首先需要确定-u的位置
+		int upos = 1;
+		bool isUnion = false;
+		string arg1, param1, arg2, param2;
+		for (int i =0; i < 6; i++) {
+			if (argv[i] == "-u") {
+				upos = i;
+				isUnion = true;
+				break;
+			}
+		}
+		if (isUnion == false) {
+			cout << "输入命令行格式错误，出现单数个参数但未出现[-u]，请重新输入！" << endl;
+			return;
+		}
+		if (upos == 1) {
+			arg1 = argv[2];
+			param1 = argv[3];
+			arg2 = argv[4];
+			param1 = argv[5];
+		}
+		if (upos == 3) {
+			arg1 = argv[1];
+			param1 = argv[2];
+			arg2 = argv[4];
+			param1 = argv[5];
+		}
+		else if (upos == 5) {
+			arg1 = argv[1];
+			param1 = argv[2];
+			arg2 = argv[3];
+			param1 = argv[4];
+		}
+		else {
+			cout << "输入命令行格式错误，请重新输入！" << endl;
+			return;
+		}
+		if (arg1 == "-n" || arg2 == "-n") {
+			if (arg1 == "-n") {
+				int n = isNum(param1);
+				if (n <= 0 || n > 1000000) {
+					cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
+					return;
+				}
+				if (arg2 == "-r") {
+					string begin, end;
+					bool isBegin = true;
+					//将范围"a-b"转为：a  b
+					for (int i = 0; i < param2.length(); i++) {
+						if (param2[i] == '-') {
+							isBegin = false;
+						}
+						else {
+							if (isBegin) {
+								begin += param2[i];
+							}
+							else {
+								end += param2[i];
+							}
+						}
+					}
+					if (begin.length() == 0 || end.length() == 0) {
+						cout << "[-r]项参数不规范，应输入a-b形式的参数，请重新输入！" << endl;
+						return;
+					}
+					int begin_num = isNum(begin);
+					int end_num = isNum(end);
+					if (begin_num <= 0 || end_num <= 0) {
+						cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入！" << endl;
+						return;
+					}
+					else {
+						generator.generate(n, begin_num, end_num, isUnion);
+						cout << "已生成" + param1 + "个具有唯一解数独游戏，挖空范围在[" << begin_num << "," << end_num << "]之间" << endl;
+					}
+				}
+				else if (arg2 == "-m") {
+
+				}
+				else {
+					cout << "输入有误！存在未定义的选项" << endl;
+					return;
+				}
+			}
+			else {
+
+			}
+		}
+		else {
+			cout << "输入命令行格式错误，请重新输入！" << endl;
+			return;
+		}
+		
 	}
 	else {
 		cout << "输入有误！" << endl;
@@ -114,7 +223,7 @@ void InputHandler::check(int argc, char** argv) {
 int InputHandler::isNum(const string& s) {
 	size_t size = s.size();
 	if (size > 7)
-		return 0;
+		return -1;
 	for (size_t i = 0; i < size; i++) {
 		int ascii = int(s[i]);
 		if (ascii >= 48 && ascii <= 57)
