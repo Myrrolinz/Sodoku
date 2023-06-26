@@ -41,8 +41,8 @@ void InputHandler::check(int argc, char** argv) {
 			}
 		}
 		else if (parameter1 == "-s") {
-			fstream infile(parameter2, ios::in);
-			fstream outfile(AnsPath, ios::out);
+			fstream infile(absolatePath+QuexPath, ios::in);
+			fstream outfile(absolatePath + AnsPath, ios::out);
 			if (!infile.is_open()) {
 				cout << "文件打开失败！" << endl;
 				return;
@@ -59,13 +59,38 @@ void InputHandler::check(int argc, char** argv) {
 					cout << "第" << i << "个数独无解！" << endl;
 					outfile << "No solution" << endl << endl;
 				}
+				i++;
+				board.clean();
 			}
+			cout << "完成求解！" << endl;
 			infile.close();
 			outfile.close();
 		}
 		else {
 			cout << "输入有误！" << endl;
 		}
+	}
+	else if (argc == 4) {
+		string arg1 = argv[1];
+		string arg2 = argv[2];
+		string arg3 = argv[3];
+		string parm1;
+		if (arg2 == "-n" || arg1 == "-u") {
+			parm1 = arg3;
+		}
+		else if (arg1 == "-n" || arg3 == "-u") {
+			parm1 = arg2;
+		}
+		else {
+			cout << "输入参数有误，请重新输入！" << endl;
+			return;
+		}
+		int n = isNum(parm1);
+		if (n <= 0 || n > 1000000) {
+			cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
+			return;
+		}
+		generator.generate(n, 18, 64, true);
 	}
 	else if(argc==5){
 		string arg1= argv[1];

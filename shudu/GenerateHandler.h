@@ -14,6 +14,7 @@ private:
 	string FinalPath = "final.txt";
 	string outputPath = "question.txt";
 	string absolatePath = "C:/Users/civilizwa/source/repos/shudu/shudu/";
+	int FinalNum = 0;//终局数目
 	int current_HoleNum = 0;//当前挖空数
 	int current_selectFinal = 0;//当前使用的棋盘终局
 	int matrix[100][9][9] = { 0 };//开辟一个大数组，存储最多100个终局

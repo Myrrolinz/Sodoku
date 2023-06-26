@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include "SolveHandler.h"
 using namespace std;
 
@@ -47,21 +49,40 @@ int SolverHandler::getMask(int i, int j) {
     return mask;
 }
 
-void SolverHandler::input(fstream& f) {
+void SolverHandler::clean() {
+    //清空数组
+    //清空row、col、patch
     for (int i = 0; i < 9; i++) {
+        row[i] = 0;
+        col[i] = 0;
+        patch[i] = 0;
+        for (int j = 0; j < 9; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+    // 清空栈
+    while (!blank.empty()) {
+        blank.pop();
+    }
+
+
+}
+void SolverHandler::input(fstream& f) {
+    string line;
+    for (int i = 0; i < 9; i++) {
+        std::getline(f, line);
+        std::istringstream iss(line);
         for (int j = 0; j < 9; j++) {
             char val;
-            f >> val;
-            int num = val;
+            iss >> val;
             if (val != '$') {
                 val -= '0';
             }
             insert(i, j, val);
         }
     }
+    std::getline(f, line);
     // remove empty line
-    f.get();
-    f.get();
 }
 
 void SolverHandler::output(fstream& f) {

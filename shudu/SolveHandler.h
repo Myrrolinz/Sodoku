@@ -21,4 +21,5 @@ public:
     void input(fstream& f);
     void output(fstream& f);
     int solve();
+    void clean();
 };

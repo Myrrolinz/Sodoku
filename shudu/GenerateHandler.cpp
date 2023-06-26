@@ -27,10 +27,18 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 		for (int i = 0; i < num; i++) {
 			//在范围内随机生成挖空个数
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
+			cout << "generateRandomNumber" << current_HoleNum << endl;
 			//挖current_HoleNum个洞
 			holehole();
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					cout << holeboard[i][j] << " ";
+				}
+				cout << endl;
+			}
 			//随机挑选一个终局
 			SelectFinal();
+			cout << "selectFinal:" << current_selectFinal << endl;
 		
 			//将终局挖空后的结果输出到文件
 			for (int row = 0; row < 9; row++) {
@@ -40,7 +48,7 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 				else {
 					outfile << " " << matrix[current_selectFinal][row][0];
 				}
-				for (int col = 0; col < 9; col++) {
+				for (int col = 1; col < 9; col++) {
 					if (holeboard[row][col] == 1) {
 						outfile << " $";
 					}
@@ -76,11 +84,13 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 }
 
 int Generatehandler::generateRandomNumber(int min, int max) {
-	// 设置随机数种子
-	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	// 设置随机数引擎和分布
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(min, max);
 
 	// 生成随机数
-	int randomNumber = min + std::rand() % (max - min + 1);
+	int randomNumber = dis(gen);
 	return randomNumber;
 }
 void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) {
@@ -177,20 +187,19 @@ void Generatehandler::generateSudoku(std::vector<std::vector<int>>& board) {
 void Generatehandler::holehole() {
 	//置零
 	for (int i = 0; i < 9; i++) {
-		for (int j = 0; i < 9; j++) {
+		for (int j = 0; j < 9; j++) {
 			holeboard[i][j] = 0;
 		}
 	}
-
 	//先挖掉，每行挖两个，再从剩余的空中挖
 	for (int i = 0; i < 9; i++) {
 		// 设置种子，确保每次运行生成的随机数序列不同
-		std::srand(std::time(0));
+		std::srand(static_cast<unsigned int>(std::time(nullptr)));
 		// 生成1到9之间的随机数
-		int hole1 = std::rand() % 9;
-		int hole2 = std::rand() % 9;
+		int hole1 = generateRandomNumber(0, 8);
+		int hole2 = generateRandomNumber(0, 8);
 		while (hole1 == hole2) {
-			hole2 = std::rand() % 9;
+			hole2 = generateRandomNumber(0, 8);
 		}
 		//将这两个位置设置为挖去状态
 		holeboard[i][hole1] = 1;
@@ -200,11 +209,11 @@ void Generatehandler::holehole() {
 
 	int restHole = current_HoleNum - 18;
 	while (restHole--) {
-		int row= std::rand() % 9 ;
-		int col= std::rand() % 9;
+		int row= generateRandomNumber(0, 8);
+		int col= generateRandomNumber(0, 8);
 		while (holeboard[row][col] == 0) {
-			row = std::rand() % 9;
-			col = std::rand() % 9;
+			row = generateRandomNumber(0, 8);
+			col = generateRandomNumber(0, 8);
 		}
 		holeboard[row][col] = 1;
 	}
@@ -215,26 +224,32 @@ void Generatehandler::input(fstream& file) {
 	//获取一个终局，将其存入matrix数组
 	string line;
 	int a=0, b=0, c=0;//[a][b][c]
+	bool isbreak = false;
 	while (std::getline(file, line)) {
 		if (line.empty()) {
 			// 遇到空行时，跳过并处理下一组数据
 			// 这里可以将numbers存储到适当的数据结构中，或进行其他操作
 			// 清空numbers以准备下一组数据的读取
 			a++;
+			b = 0;
+			if (isbreak) {
+				FinalNum = a - 1;
+				break;
+			}
 			continue;
+			isbreak = true;
 		}
-
+		isbreak = false;
 		std::istringstream iss(line);
 		int num;
 		for (int i = 0; i < 9; i++) {
 			iss >> num;
 			matrix[a][b][i] = num;
-			cout << "matrix[" << a << "," << b << "," << c << "]:" << num << endl;
-			c++;
+			//cout << "matrix[" << a << "," << b << "," << i << "]:" << num << endl;
 		}
 		
 		b++;
-		if (b > 100) {//只存100个终局
+		if (a > 100) {//只存100个终局
 			break;
 		}
 	}
@@ -257,8 +272,5 @@ int Generatehandler::isNum(const string& s) {
 void Generatehandler::SelectFinal() {
 	//随机挑选一个终局
 	std::srand(std::time(0));  // 设置种子，确保每次运行生成的随机数序列不同
-	current_selectFinal = std::rand() % 100;  // 生成1到100之间的随机数
-	while (matrix[current_selectFinal][0][0] == 0) {
-		current_selectFinal = std::rand() % 100;
-	}
+	current_selectFinal = generateRandomNumber(0, FinalNum);  // 生成1到100之间的随机数
 }
