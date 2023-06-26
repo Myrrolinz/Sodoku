@@ -25,7 +25,7 @@ void InputHandler::check(int argc, char** argv) {
 	-n num:生成num个数独游戏，存储到game.txt中
 	-r 挖空：a-b
 	*/
-	//generator.setAbsPath(absolatePath);
+	generator.setAbsPath(absolatePath);
 	if (argc == 3) {
 		string parameter1 = argv[1];
 		string parameter2 = argv[2];
@@ -41,7 +41,7 @@ void InputHandler::check(int argc, char** argv) {
 			}
 		}
 		else if (parameter1 == "-s") {
-			fstream infile(absolatePath+QuexPath, ios::in);
+			fstream infile(absolatePath+parameter2, ios::in);
 			fstream outfile(absolatePath + AnsPath, ios::out);
 			if (!infile.is_open()) {
 				cout << "文件打开失败！" << endl;
