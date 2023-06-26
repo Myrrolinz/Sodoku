@@ -13,12 +13,13 @@ class Generatehandler {
 private:
 	string FinalPath = "final.txt";
 	string outputPath = "question.txt";
+	string absolatePath = "C:/Users/civilizwa/source/repos/shudu/shudu/";
 	int current_HoleNum = 0;//当前挖空数
 	int current_selectFinal = 0;//当前使用的棋盘终局
 	int matrix[100][9][9] = { 0 };//开辟一个大数组，存储最多100个终局
 	int holeboard[9][9] = { 0 };//当前挖空的棋盘位置
 public:
-	void generate(int num, int beginNum, int endNum, bool isUnion = false);
+	void generate(int num, int beginNum, int endNum, bool isUnion);
 	void holehole();//挖呀挖呀挖
 	void input(fstream& f);
 	void output(fstream& f, vector<std::vector<int>>& board);
@@ -32,5 +33,8 @@ public:
 	void generateSudoku(vector<std::vector<int>>& board);
 	//生成在min-max范围间的随机数
 	int generateRandomNumber(int min, int max);
-
+	//设置绝对路径
+	void setAbsPath(string abs) {
+		absolatePath = abs;
+	}
 };

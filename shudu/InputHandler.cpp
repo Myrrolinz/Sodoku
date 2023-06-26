@@ -25,6 +25,7 @@ void InputHandler::check(int argc, char** argv) {
 	-n num:生成num个数独游戏，存储到game.txt中
 	-r 挖空：a-b
 	*/
+	//generator.setAbsPath(absolatePath);
 	if (argc == 3) {
 		string parameter1 = argv[1];
 		string parameter2 = argv[2];
@@ -71,6 +72,7 @@ void InputHandler::check(int argc, char** argv) {
 		string parm1 = argv[2];
 		string arg2 = argv[3];
 		string param2 = argv[4];
+		
 		if (arg1 == "-n") {
 			int n = isNum(parm1);
 			if (n <= 0 || n > 1000000) {
@@ -100,12 +102,12 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
-				if (begin_num <= 0 || end_num <= 0|| begin_num < end_num) {
+				if (begin_num <= 0 || end_num <= 0|| begin_num > end_num) {
 					cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入！" << endl;
 					return;
 				}
 				else {
-					generator.generate(n, begin_num, end_num);
+					generator.generate(n, begin_num, end_num,false);
 					cout << "已生成" + parm1 + "个数独游戏，挖空范围在["<<begin_num<<","<<end_num<<"]之间" << endl;
 				}
 			}
@@ -118,14 +120,14 @@ void InputHandler::check(int argc, char** argv) {
 				int level = isNum(param2);
 				
 				if (level == 1) {
-					generator.generate(n, 5, 17);
+					generator.generate(n, 5, 17,false);
 				}
 				else if(level==2)
 				{
-					generator.generate(n, 18, 32);
+					generator.generate(n, 18, 32,false);
 				}
 				else if (level == 3) {
-					generator.generate(n, 33, 64);
+					generator.generate(n, 33, 64,false);
 				}
 				else {
 					cout << "输入的难度不符合规范，应为1-3之间的整数！" << endl;
@@ -178,54 +180,77 @@ void InputHandler::check(int argc, char** argv) {
 			return;
 		}
 		if (arg1 == "-n" || arg2 == "-n") {
-			if (arg1 == "-n") {
-				int n = isNum(param1);
-				if (n <= 0 || n > 1000000) {
-					cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
-					return;
-				}
-				if (arg2 == "-r") {
-					string begin, end;
-					bool isBegin = true;
-					//将范围"a-b"转为：a  b
-					for (int i = 0; i < param2.length(); i++) {
-						if (param2[i] == '-') {
-							isBegin = false;
-						}
-						else {
-							if (isBegin) {
-								begin += param2[i];
-							}
-							else {
-								end += param2[i];
-							}
-						}
-					}
-					if (begin.length() == 0 || end.length() == 0) {
-						cout << "[-r]项参数不规范，应输入a-b形式的参数，请重新输入！" << endl;
-						return;
-					}
-					int begin_num = isNum(begin);
-					int end_num = isNum(end);
-					if (begin_num <= 17 || end_num <= 0||begin_num<end_num||begin_num>64) {
-						cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
-						return;
+			if (arg2 == "-n") {//调整参数顺序
+				string temp_argv = arg1;
+				string temp_param = param1;
+				arg1 = arg2;
+				param1 = param2;
+				arg2 = temp_argv;
+				param2 = temp_param;
+			}
+			int n = isNum(param1);
+			if (n <= 0 || n > 1000000) {
+				cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
+				return;
+			}
+			if (arg2 == "-r") {
+				string begin, end;
+				bool isBegin = true;
+				//将范围"a-b"转为：a  b
+				for (int i = 0; i < param2.length(); i++) {
+					if (param2[i] == '-') {
+						isBegin = false;
 					}
 					else {
-						generator.generate(n, begin_num, end_num, isUnion);
-						cout << "已生成" + param1 + "个具有唯一解数独游戏，挖空范围在[" << begin_num << "," << end_num << "]之间" << endl;
+						if (isBegin) {
+							begin += param2[i];
+						}
+						else {
+							end += param2[i];
+						}
 					}
 				}
-				else if (arg2 == "-m") {
-
+				if (begin.length() == 0 || end.length() == 0) {
+					cout << "[-r]项参数不规范，应输入a-b形式的参数，请重新输入！" << endl;
+					return;
+				}
+				int begin_num = isNum(begin);
+				int end_num = isNum(end);
+				if (begin_num <= 17 || end_num <= 0 || begin_num < end_num || begin_num>64) {
+					cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
+					return;
 				}
 				else {
-					cout << "输入有误！存在未定义的选项" << endl;
+					generator.generate(n, begin_num, end_num, isUnion);
+					cout << "已生成" + param1 + "个具有唯一解数独游戏，挖空范围在[" << begin_num << "," << end_num << "]之间" << endl;
+				}
+			}
+			else if (arg2 == "-m") {
+				//选择难度的时候，分为3档
+				/*第一档：挖空在5-18之间(因此不能要求唯一解)
+				  第二档：挖空在18-32之间
+				  第三档：挖空在33-64之间
+				  */
+				int level = isNum(param2);
+
+				if (level == 1) {
+					generator.generate(n, 5, 17,true);
+				}
+				else if (level == 2)
+				{
+					generator.generate(n, 18, 32,true);
+				}
+				else if (level == 3) {
+					generator.generate(n, 33, 64,true);
+				}
+				else {
+					cout << "输入的难度不符合规范，应为1-3之间的整数！" << endl;
 					return;
 				}
 			}
 			else {
-
+				cout << "输入有误！存在未定义的选项" << endl;
+				return;
 			}
 		}
 		else {
@@ -263,7 +288,7 @@ void InputHandler::getFinal(int num) {
 	bar.show();
 
 	//Open output file
-	fstream outfile(FinalPath, ios::out);
+	fstream outfile(absolatePath+FinalPath, ios::out);
 	if (!outfile.is_open()) {
 		cout << "文件打开失败！" << endl;
 		return;

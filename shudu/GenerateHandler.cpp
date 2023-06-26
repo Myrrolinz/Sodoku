@@ -5,14 +5,17 @@
 #include <ctime>
 using namespace std;
 
-void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion = false) {
+void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {
 	/*思路：从beginNum开始挖空，
 	如果需要判断union：
 	判断不成立后，重新迭代100次，
 	超过100次则挖空数+1后重新生成
 	直至endNum*/
-	fstream infile(FinalPath, ios::in);
-	fstream outfile(outputPath, ios::out);
+	fstream infile(absolatePath+FinalPath, ios::in);
+	fstream outfile(absolatePath+outputPath, ios::out);
+	if (!infile.is_open()) {
+		cout << "未找到输入文件的路径！" << endl;
+	}
 	if (!outfile.is_open()) {
 		cout << "文件打开失败！" << endl;
 		return;
@@ -73,13 +76,11 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion =
 }
 
 int Generatehandler::generateRandomNumber(int min, int max) {
-	// 设置随机数引擎和分布
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dis(min, max);
+	// 设置随机数种子
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
 	// 生成随机数
-	int randomNumber = dis(gen);
+	int randomNumber = min + std::rand() % (max - min + 1);
 	return randomNumber;
 }
 void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) {
@@ -225,10 +226,13 @@ void Generatehandler::input(fstream& file) {
 
 		std::istringstream iss(line);
 		int num;
-		while (iss >> num) {
-			matrix[a][b][c] = num;
+		for (int i = 0; i < 9; i++) {
+			iss >> num;
+			matrix[a][b][i] = num;
+			cout << "matrix[" << a << "," << b << "," << c << "]:" << num << endl;
 			c++;
 		}
+		
 		b++;
 		if (b > 100) {//只存100个终局
 			break;
