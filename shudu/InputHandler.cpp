@@ -3,6 +3,7 @@
 #include <fstream>
 #include "progress.h"
 #include <algorithm>
+#include "SolveHandler.h"
 using namespace std;
 
 inline void output(fstream& f, int* line, int* offset) {
@@ -22,11 +23,12 @@ void InputHandler::check(int argc, char** argv) {
 	-c num:生成num个终盘
 	-s game.txt:从game.txt读取若干数独游戏，并给出解答，存储到shudu.txt中
 	-n num:生成num个数独游戏，存储到game.txt中
+	-r 挖空：a-b
 	*/
 	if (argc == 3) {
 		string parameter1 = argv[1];
 		string parameter2 = argv[2];
-		if (parameter1 == "-c") {
+		if (parameter1 == "-c") {//done
 			int n = isNum(parameter2);
 			if (n <= 0 || n > 1000000)
 				cout << "不满足0<n<=1000000！" << endl;
@@ -37,38 +39,70 @@ void InputHandler::check(int argc, char** argv) {
 				cout << "已生成" + parameter2 + "个数独终盘" << endl;
 			}
 		}
-		/*else if (parameter1 == "-s") {
-			ifstream in(parameter2);
-			if (!in.is_open()) {
-				cout << parameter2 + "无法打开！" << endl;
+		else if (parameter1 == "-s") {
+			fstream infile(parameter2, ios::in);
+			fstream outfile("suduku.txt", ios::out);
+			if (!infile.is_open()) {
+				cout << "文件打开失败！" << endl;
 				return;
 			}
-			char ch[81];
-			char c;
-			int count = 0;
-			SudokuSolver ss;
-			FILE* out = fopen("sudoku.txt", "wt");
-			while (in.get(c)) {	//in >> c 会忽略空白回车符
-				if (isdigit(c)) {
-					ch[count++] = c;
+			cout << "正在求解，请稍候..." << endl;
+			int i = 1;
+			while (infile.peek() != EOF) {
+				SolverHandler board;
+				board.input(infile);
+				int result = board.solve();
+				if (result == 0) {
+					board.output(outfile);
 				}
-				if (count == 81) {
-					count = 0;
-					fputs(ss.solve(ch), out);
+				else {
+					cout << "第" << i << "个数独无解！" << endl;
+					outfile << "No solution" << endl << endl;
 				}
 			}
-			in.close();
-			if (count != 0) {
-				char* str = "存在错误格式！";
-				fputs(str, out);
-				cout << str << endl;
-			}
-			else
-				cout << "已解出" + parameter2 + "里的数独" << endl;
-			fclose(out);
-		}*/
+			infile.close();
+			outfile.close();
+		}
 		else {
 			cout << "输入有误！" << endl;
+		}
+	}
+	else if(argc==5){
+		string arg1= argv[1];
+		string parm1 = argv[2];
+		string arg2 = argv[3];
+		string param2 = argv[4];
+		if (arg1 == "-n") {
+			int n = isNum(parm1);
+			if (n <= 0 || n > 1000000) {
+				cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
+				return;
+			}
+			if (arg2 == "-r") {
+				string begin, end;
+				bool isBegin = true;
+				//将范围"a-b"转为：a  b
+				for (int i = 0; i < param2.length(); i++) {
+					if (param2[i] == '-') {
+						isBegin = false;
+					}
+					else {
+						if (isBegin) {
+							begin += param2[i];
+						}
+						else {
+							end += param2[i];
+						}
+					}
+				}
+				if (begin.length() == 0 || end.length() == 0) {
+					cout << "[-r]项参数不规范，应输入a-b形式的参数，请重新输入！" << endl;
+					return;
+				}
+				int begin_num = isNum(begin);
+				int end_num = isNum(end);
+				
+			}
 		}
 	}
 	else {
@@ -85,8 +119,8 @@ int InputHandler::isNum(const string& s) {
 		int ascii = int(s[i]);
 		if (ascii >= 48 && ascii <= 57)
 			continue;
-		else
-			return 0;
+		else 
+			return -1;
 	}
 	return stoi(s);
 }
@@ -130,4 +164,8 @@ void InputHandler::getFinal(int num) {
 			bar.show();
 		}
 	}
+}
+
+void InputHandler::getQues(int num, int begin_num, int end_num) {
+
 }
