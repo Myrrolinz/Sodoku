@@ -64,14 +64,6 @@ void SolverHandler::input(fstream& f) {
     f.get();
 }
 
-void SolverHandler::inputFromMatrix(int** matrix) {
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            insert(i, j, matrix[i][j]);
-        }
-    }
-}
-
 void SolverHandler::output(fstream& f) {
     for (int i = 0; i < 9; i++) {
         f << matrix[i][0];

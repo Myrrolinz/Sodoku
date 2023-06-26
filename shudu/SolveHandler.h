@@ -20,6 +20,5 @@ public:
     int getMask(int i, int j);
     void input(fstream& f);
     void output(fstream& f);
-
     int solve();
 };
