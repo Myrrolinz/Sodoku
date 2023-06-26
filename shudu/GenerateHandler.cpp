@@ -27,18 +27,12 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 		for (int i = 0; i < num; i++) {
 			//在范围内随机生成挖空个数
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
-			cout << "generateRandomNumber" << current_HoleNum << endl;
+			
 			//挖current_HoleNum个洞
 			holehole();
-			for (int i = 0; i < 9; i++) {
-				for (int j = 0; j < 9; j++) {
-					cout << holeboard[i][j] << " ";
-				}
-				cout << endl;
-			}
+			
 			//随机挑选一个终局
 			SelectFinal();
-			cout << "selectFinal:" << current_selectFinal << endl;
 		
 			//将终局挖空后的结果输出到文件
 			for (int row = 0; row < 9; row++) {
@@ -101,7 +95,7 @@ void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) 
 		else {
 			outfile << " " << board[row][0];
 		}
-		for (int col = 0; col < 9; col++) {
+		for (int col = 1; col < 9; col++) {
 			if (holeboard[row][col] == 1) {
 				outfile << " $";
 			}
@@ -211,7 +205,7 @@ void Generatehandler::holehole() {
 	while (restHole--) {
 		int row= generateRandomNumber(0, 8);
 		int col= generateRandomNumber(0, 8);
-		while (holeboard[row][col] == 0) {
+		while (holeboard[row][col] == 1) {
 			row = generateRandomNumber(0, 8);
 			col = generateRandomNumber(0, 8);
 		}

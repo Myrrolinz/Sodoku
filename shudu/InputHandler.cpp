@@ -172,13 +172,13 @@ void InputHandler::check(int argc, char** argv) {
 		bool isUnion = false;
 		string arg1, param1, arg2, param2;
 		for (int i =0; i < 6; i++) {
-			if (argv[i] == "-u") {
+			string p = argv[i];
+			if (p == "-u") {
 				upos = i;
 				isUnion = true;
-				break;
 			}
 		}
-		if (isUnion == false) {
+		if (!isUnion) {
 			cout << "输入命令行格式错误，出现单数个参数但未出现[-u]，请重新输入！" << endl;
 			return;
 		}
@@ -186,19 +186,19 @@ void InputHandler::check(int argc, char** argv) {
 			arg1 = argv[2];
 			param1 = argv[3];
 			arg2 = argv[4];
-			param1 = argv[5];
+			param2 = argv[5];
 		}
-		if (upos == 3) {
+		else if (upos == 3) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[4];
-			param1 = argv[5];
+			param2 = argv[5];
 		}
 		else if (upos == 5) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[3];
-			param1 = argv[4];
+			param2 = argv[4];
 		}
 		else {
 			cout << "输入命令行格式错误，请重新输入！" << endl;
@@ -214,6 +214,11 @@ void InputHandler::check(int argc, char** argv) {
 				param2 = temp_param;
 			}
 			int n = isNum(param1);
+			/*cout << "arg1" << arg1 << endl;
+			cout << "param1:" << param1 << endl;
+			cout << "arg2" << arg2 << endl;
+			cout << "param2:" << param2 << endl;
+			cout << n << endl;*/
 			if (n <= 0 || n > 1000000) {
 				cout << "生成数独题库数量不规范(0<n<1000000)！请重新输入生成数" << endl;
 				return;
@@ -241,7 +246,7 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
-				if (begin_num <= 17 || end_num <= 0 || begin_num < end_num || begin_num>64) {
+				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num>64) {
 					cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
 					return;
 				}
