@@ -49,7 +49,6 @@ void InputHandler::check(int argc, char** argv) {
 			cout << "正在求解，请稍候..." << endl;
 			int i = 1;
 			while (infile.peek() != EOF) {
-				SolverHandler board;
 				board.input(infile);
 				int result = board.solve();
 				if (result == 0) {
@@ -101,7 +100,7 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
-				if (begin_num <= 0 || end_num <= 0) {
+				if (begin_num <= 0 || end_num <= 0|| begin_num < end_num) {
 					cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入！" << endl;
 					return;
 				}
@@ -187,8 +186,8 @@ void InputHandler::check(int argc, char** argv) {
 					}
 					int begin_num = isNum(begin);
 					int end_num = isNum(end);
-					if (begin_num <= 0 || end_num <= 0) {
-						cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入！" << endl;
+					if (begin_num <= 17 || end_num <= 0||begin_num<end_num||begin_num>64) {
+						cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
 						return;
 					}
 					else {
@@ -275,6 +274,3 @@ void InputHandler::getFinal(int num) {
 	}
 }
 
-void InputHandler::getQues(int num, int begin_num, int end_num) {
-
-}

@@ -16,9 +16,47 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion =
 		return;
 	}
 	cout << "---------------正在生成" << num << "个数独题目---------------" << endl;
-	if (beginNum <= 17||beginNum>64) {
-		if (isUnion) {
-			cout<<""
+	for (int i = 0; i < num; i++) {
+		holenum = beginNum;
+		for (int wakong = beginNum; wakong <= endNum; wakong++) {
+
 		}
 	}
+	
+}
+
+void Generatehandler::holehole() {
+	//先挖掉
+}
+
+void Generatehandler::input(fstream& f) {
+	//获取一个终局，将其存入matrix数组
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			char val;
+			f >> val;
+			int num = val;
+			if (val != '$') {
+				val -= '0';
+			}
+			matrix[i][j]=
+		}
+	}
+	// remove empty line
+	f.get();
+	f.get();
+}
+
+int Generatehandler::isNum(const string& s) {
+	size_t size = s.size();
+	if (size > 7)
+		return -1;
+	for (size_t i = 0; i < size; i++) {
+		int ascii = int(s[i]);
+		if (ascii >= 48 && ascii <= 57)
+			continue;
+		else
+			return -1;
+	}
+	return stoi(s);
 }
