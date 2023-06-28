@@ -20,6 +20,7 @@ public:
 	char GetType2();
 	int GetRange1();
 	int GetRange2();
+	int GetLevel();
 private:
 	int isNum(const string& s);
 	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
@@ -31,5 +32,6 @@ private:
 	int num;
 	int range1;
 	int range2;
+	int level;
 };
 
