@@ -5,7 +5,7 @@
 #include <ctime>
 using namespace std;
 
-void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {
+bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {
 	/*思路：从beginNum开始挖空，
 	如果需要判断union：
 	判断不成立后，重新迭代100次，
@@ -18,7 +18,7 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 	}
 	if (!outfile.is_open()) {
 		cout << "文件打开失败!" << endl;
-		return;
+		return false;
 	}
 	cout << "---------------正在生成" << num << "个数独题目---------------" << endl;
 	input(infile);//将终局读入matrix数组
@@ -75,6 +75,7 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 		outfile.close();
 	}
 	cout << "生成完成!";
+	return true;
 }
 
 int Generatehandler::generateRandomNumber(int min, int max) {

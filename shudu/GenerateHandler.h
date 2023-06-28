@@ -20,7 +20,7 @@ private:
 	int matrix[100][9][9] = { 0 };//开辟一个大数组，存储最多100个终局
 	int holeboard[9][9] = { 0 };//当前挖空的棋盘位置
 public:
-	void generate(int num, int beginNum, int endNum, bool isUnion);
+	bool generate(int num, int beginNum, int endNum, bool isUnion);
 	void holehole();//挖呀挖呀挖
 	void input(fstream& f);
 	void output(fstream& f, vector<std::vector<int>>& board);

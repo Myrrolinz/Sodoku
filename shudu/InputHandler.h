@@ -27,8 +27,8 @@ private:
 	string FinalPath = "final.txt";//存储终局
 	string AnsPath = "ans.txt";//存储求解答案
 	string QuexPath = "question.txt";//存储数独题目
-	char type1;
-	char type2;
+	char type1 = 'y';
+	char type2 = 'y';
 	int num;
 	int range1;
 	int range2;

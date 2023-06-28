@@ -100,7 +100,7 @@ namespace UnitTest1
 			InputHandler inputs;
 			inputs.setAbsPath(path);
 			inputs.check(argc1, argv3);
-			bool abc = ques_generate1(1);
+			bool abc = inputs.generator.generate(100, 18, 64, false);
 			Assert::AreEqual(inputs.GetType1() == 'n', true);
 			Assert::AreEqual(abc, true);
 		}
@@ -145,7 +145,7 @@ namespace UnitTest1
 			InputHandler inputs;
 			inputs.setAbsPath(path);
 			inputs.check(argc1, argv1);
-			bool a = sudoku_generate(inputs.GetNum());
+			bool a = inputs.generator.generate(inputs.GetNum(), 18, 64, false);
 			Assert::AreEqual(true, a);
 		}
 
@@ -206,7 +206,9 @@ namespace UnitTest1
 
 		TEST_METHOD(TestMethod11)
 		{
-			bool abc = ques_generate3(1, 20, 30);
+			InputHandler inputs;
+			inputs.setAbsPath(path);
+			bool abc = inputs.generator.generate(1, 20, 30, false);
 			Assert::AreEqual(abc, true);
 		}
 		TEST_METHOD(TestMethod12)
