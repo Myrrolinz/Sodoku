@@ -36,6 +36,8 @@ void InputHandler::check(int argc, char** argv) {
 			else {
 				// FianlMaker fm;
 				// fm.make(n);
+				type1 = 'c';
+				num = n;
 				getFinal(n);
 				cout << "已生成" << parameter2 << "个数独终盘" << endl;
 			}
@@ -43,6 +45,7 @@ void InputHandler::check(int argc, char** argv) {
 		else if (parameter1 == "-s") {
 			fstream infile(absolatePath+parameter2, ios::in);
 			fstream outfile(absolatePath + AnsPath, ios::out);
+			type1 = 's';
 			if (!infile.is_open()) {
 				cout << "文件打开失败!" << endl;
 				return;
@@ -76,9 +79,17 @@ void InputHandler::check(int argc, char** argv) {
 		string arg3 = argv[3];
 		string parm1;
 		if (arg2 == "-n" || arg1 == "-u") {
+			if (arg2 == "-n")
+				type2 = 'n';
+			if (arg1 == "-u")
+				type1 = 'u';
 			parm1 = arg3;
 		}
 		else if (arg1 == "-n" || arg3 == "-u") {
+			if (arg1 == "-n")
+				type1 = 'n';
+			if (arg3 == "-u")
+				type2 = 'u';
 			parm1 = arg2;
 		}
 		else {
@@ -87,6 +98,7 @@ void InputHandler::check(int argc, char** argv) {
 		}
 		int n = isNum(parm1);
 		if (n <= 0 || n > 1000000) {
+			num = n;
 			cout << "生成数独题库数量不规范(0<n<1000000)!请重新输入生成数" << endl;
 			return;
 		}
@@ -97,14 +109,16 @@ void InputHandler::check(int argc, char** argv) {
 		string parm1 = argv[2];
 		string arg2 = argv[3];
 		string param2 = argv[4];
-		
 		if (arg1 == "-n") {
 			int n = isNum(parm1);
+			num = n;
+			type1 = 'n';
 			if (n <= 0 || n > 1000000) {
 				cout << "生成数独题库数量不规范(0<n<1000000)!请重新输入生成数" << endl;
 				return;
 			}
 			if (arg2 == "-r") {
+				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;
 				//将范围"a-b"转为：a  b
@@ -127,6 +141,8 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
+				range1 = begin_num;
+				range2 = end_num;
 				if (begin_num <= 0 || end_num <= 0|| begin_num > end_num) {
 					cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入!" << endl;
 					return;
@@ -143,15 +159,18 @@ void InputHandler::check(int argc, char** argv) {
 				  第三档：挖空在33-64之间
 				  */
 				int level = isNum(param2);
-				
+				type2 = 'm';
 				if (level == 1) {
+					level = 1;
 					generator.generate(n, 5, 17,false);
 				}
 				else if(level==2)
 				{
+					level = 2;
 					generator.generate(n, 18, 32,false);
 				}
 				else if (level == 3) {
+					level = 3;
 					generator.generate(n, 33, 64,false);
 				}
 				else {
@@ -214,6 +233,8 @@ void InputHandler::check(int argc, char** argv) {
 				param2 = temp_param;
 			}
 			int n = isNum(param1);
+			type1 = 'n';
+			num = n;
 			/*cout << "arg1" << arg1 << endl;
 			cout << "param1:" << param1 << endl;
 			cout << "arg2" << arg2 << endl;
@@ -224,6 +245,7 @@ void InputHandler::check(int argc, char** argv) {
 				return;
 			}
 			if (arg2 == "-r") {
+				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;
 				//将范围"a-b"转为：a  b
@@ -246,6 +268,8 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
+				range1 = begin_num;
+				range2 = end_num;
 				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num>64) {
 					cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
 					return;
@@ -261,8 +285,8 @@ void InputHandler::check(int argc, char** argv) {
 				  第二档：挖空在18-32之间
 				  第三档：挖空在33-64之间
 				  */
-				int level = isNum(param2);
-
+				type2 = 'm';
+				level = isNum(param2);
 				if (level == 1) {
 					generator.generate(n, 5, 17,true);
 				}
@@ -350,3 +374,26 @@ void InputHandler::getFinal(int num) {
 	}
 }
 
+int InputHandler::GetNum() {
+	return num;
+}
+
+char InputHandler::GetType1() {
+	return type1;
+}
+
+char InputHandler::GetType2() {
+	return type2;
+}
+
+int InputHandler::GetRange1() {
+	return range1;
+}
+
+int InputHandler::GetRange2() {
+	return range2;
+}
+
+int InputHandler::GetLevel() {
+	return level;
+}

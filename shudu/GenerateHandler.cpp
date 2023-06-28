@@ -74,7 +74,7 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 		}
 		outfile.close();
 	}
-	
+	cout << "生成完成!";
 }
 
 int Generatehandler::generateRandomNumber(int min, int max) {
