@@ -66,6 +66,16 @@ void InputHandler::check(int argc, char** argv) {
 			infile.close();
 			outfile.close();
 		}
+		else if (parameter1 == "-n") {
+			int n = isNum(parameter2);
+			if (n <= 0 || n > 1000)
+				cout << "不满足0<n<=1000！" << endl;
+			else {
+				generator.generate(n, 18, 64, false);
+				cout << "生成结束！" << endl;
+				return;
+			}
+		}
 		else {
 			cout << "输入有误！" << endl;
 		}
@@ -152,11 +162,13 @@ void InputHandler::check(int argc, char** argv) {
 				}
 				else if(level==2)
 				{
+					cout << "level:" << level << endl;
 					generator.generate(n, 32, 48,false);
 					cout << "生成结束！" << endl;
 					return;
 				}
 				else if (level == 3) {
+					cout << "level:" << level << endl;
 					generator.generate(n, 48, 64,false);
 					cout << "生成结束！" << endl;
 					return;
