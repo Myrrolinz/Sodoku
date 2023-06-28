@@ -13,7 +13,7 @@ class Generatehandler {
 private:
 	string FinalPath = "final.txt";
 	string outputPath = "question.txt";
-	string absolatePath = "C:/Users/civilizwa/source/repos/shudu/shudu/";
+	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
 	int FinalNum = 0;//终局数目
 	int current_HoleNum = 0;//当前挖空数
 	int current_selectFinal = 0;//当前使用的棋盘终局

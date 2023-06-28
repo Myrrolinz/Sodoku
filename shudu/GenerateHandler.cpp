@@ -87,6 +87,7 @@ int Generatehandler::generateRandomNumber(int min, int max) {
 	int randomNumber = dis(gen);
 	return randomNumber;
 }
+
 void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) {
 	for (int row = 0; row < 9; row++) {
 		if (holeboard[row][0] == 1) {

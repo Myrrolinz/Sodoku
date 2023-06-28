@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.33529.622
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shudu", "shudu\shudu.vcxproj", "{C0015EA5-F260-4510-9130-55F7256F1B8E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest1", "UnitTest1\UnitTest1.vcxproj", "{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C0015EA5-F260-4510-9130-55F7256F1B8E}.Release|x64.Build.0 = Release|x64
 		{C0015EA5-F260-4510-9130-55F7256F1B8E}.Release|x86.ActiveCfg = Release|Win32
 		{C0015EA5-F260-4510-9130-55F7256F1B8E}.Release|x86.Build.0 = Release|Win32
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Debug|x64.ActiveCfg = Debug|x64
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Debug|x64.Build.0 = Debug|x64
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Debug|x86.ActiveCfg = Debug|Win32
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Debug|x86.Build.0 = Debug|Win32
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Release|x64.ActiveCfg = Release|x64
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Release|x64.Build.0 = Release|x64
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Release|x86.ActiveCfg = Release|Win32
+		{F1C6778B-4EB3-4AA3-AD03-ACFBB5A3D38A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
