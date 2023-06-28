@@ -138,21 +138,28 @@ void InputHandler::check(int argc, char** argv) {
 			}
 			else if (arg2 == "-m") {
 				//选择难度的时候，分为3档
-				/*第一档：挖空在5-18之间(因此不能要求唯一解)
-				  第二档：挖空在18-32之间
-				  第三档：挖空在33-64之间
+				/*第一档：挖空在18-32之间(因此不能要求唯一解)
+				  第二档：挖空在32-48之间
+				  第三档：挖空在48-64之间
 				  */
 				int level = isNum(param2);
 				
 				if (level == 1) {
-					generator.generate(n, 5, 17,false);
+					cout << "level:" << level << endl;
+					generator.generate(n, 18, 32,false);
+					cout << "生成结束！" << endl;
+					return;
 				}
 				else if(level==2)
 				{
-					generator.generate(n, 18, 32,false);
+					generator.generate(n, 32, 48,false);
+					cout << "生成结束！" << endl;
+					return;
 				}
 				else if (level == 3) {
-					generator.generate(n, 33, 64,false);
+					generator.generate(n, 48, 64,false);
+					cout << "生成结束！" << endl;
+					return;
 				}
 				else {
 					cout << "输入的难度不符合规范，应为1-3之间的整数！" << endl;
