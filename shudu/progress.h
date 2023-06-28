@@ -11,37 +11,37 @@ using namespace std::chrono;
 class ProgressBar
 {
 protected:
-	// è¿›åº¦æ¡çš„é•¿åº¦ï¼ˆä¸åŒ…å«å‰åç¼€ï¼‰
+	// ½ø¶ÈÌõµÄ³¤¶È£¨²»°üº¬Ç°ºó×º£©
 	unsigned int ncols;
-	// å·²å®Œæˆçš„æ•°é‡
+	// ÒÑÍê³ÉµÄÊıÁ¿
 	std::atomic<unsigned int> finishedNum;
-	// ä¸Šæ¬¡çš„å·²å®Œæˆæ•°é‡
+	// ÉÏ´ÎµÄÒÑÍê³ÉÊıÁ¿
 	unsigned int lastNum;
-	// æ€»æ•°
+	// ×ÜÊı
 	unsigned int totalNum;
-	// è¿›åº¦æ¡é•¿åº¦ä¸ç™¾åˆ†æ¯”ä¹‹é—´çš„ç³»æ•°
+	// ½ø¶ÈÌõ³¤¶ÈÓë°Ù·Ö±ÈÖ®¼äµÄÏµÊı
 	double colsRatio;
-	// å¼€å§‹æ—¶é—´
+	// ¿ªÊ¼Ê±¼ä
 	steady_clock::time_point beginTime;
-	// ä¸Šæ¬¡é‡ç»˜çš„æ—¶é—´
+	// ÉÏ´ÎÖØ»æµÄÊ±¼ä
 	steady_clock::time_point lastTime;
-	// é‡ç»˜å‘¨æœŸ
+	// ÖØ»æÖÜÆÚ
 	milliseconds interval;
 	Timer timer;
 public:
 	ProgressBar(unsigned int totalNum, milliseconds interval) : totalNum(totalNum), interval(interval), finishedNum(0), lastNum(0), ncols(80), colsRatio(0.8) {}
-	// å¼€å§‹
+	// ¿ªÊ¼
 	void start();
-	// å®Œæˆ
+	// Íê³É
 	void finish();
-	// æ›´æ–°
+	// ¸üĞÂ
 	void update() { return this->update(1); }
-	// ä¸€æ¬¡æ›´æ–°å¤šä¸ªæ•°é‡
+	// Ò»´Î¸üĞÂ¶à¸öÊıÁ¿
 	void update(unsigned int num) { this->finishedNum += num; }
-	// è·å–è¿›åº¦æ¡é•¿åº¦
+	// »ñÈ¡½ø¶ÈÌõ³¤¶È
 	unsigned int getCols() { return this->ncols; }
-	// è®¾ç½®è¿›åº¦æ¡é•¿åº¦
+	// ÉèÖÃ½ø¶ÈÌõ³¤¶È
 	void setCols(unsigned int ncols) { this->ncols = ncols; this->colsRatio = ncols / 100; }
-	// é‡ç»˜
+	// ÖØ»æ
 	void show();
 };

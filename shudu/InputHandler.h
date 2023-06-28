@@ -9,17 +9,17 @@ class InputHandler {
 public:
 	void check(int argc, char** argv);
 	void getFinal(int num);
-	//è®¾ç½®ç»å¯¹è·¯å¾„
+	//ÉèÖÃ¾ø¶ÔÂ·¾¶
 	void setAbsPath(string abs) {
 		absolatePath = abs;
 	}
-	Generatehandler generator;//å®šä¹‰æ•°ç‹¬é¢˜ç›®ç”Ÿæˆå™¨
+	Generatehandler generator;//¶¨ÒåÊı¶ÀÌâÄ¿Éú³ÉÆ÷
 	SolverHandler board;
 private:
 	int isNum(const string& s);
-	string absolatePath = "C:/Users/civilizwa/source/repos/shudu/shudu/";
-	string FinalPath = "final.txt";//å­˜å‚¨ç»ˆå±€
-	string AnsPath = "ans.txt";//å­˜å‚¨æ±‚è§£ç­”æ¡ˆ
-	string QuexPath = "question.txt";//å­˜å‚¨æ•°ç‹¬é¢˜ç›®
+	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
+	string FinalPath = "final.txt";//´æ´¢ÖÕ¾Ö
+	string AnsPath = "ans.txt";//´æ´¢Çó½â´ğ°¸
+	string QuexPath = "question.txt";//´æ´¢Êı¶ÀÌâÄ¿
 };
 

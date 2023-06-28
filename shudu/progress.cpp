@@ -1,41 +1,41 @@
 #include"progress.h"
 
 void ProgressBar::start() {
-	// è®°å½•å¼€å§‹æ—¶é—´ï¼Œå¹¶åˆå§‹åŒ–å®šæ—¶å™¨
+	// ¼ÇÂ¼¿ªÊ¼Ê±¼ä£¬²¢³õÊ¼»¯¶¨Ê±Æ÷
 	this->beginTime = steady_clock::now();
 	this->lastTime = this->beginTime;
-	// å®šæ—¶å™¨ç”¨äºå®šæ—¶è°ƒç”¨é‡ç»˜å‡½æ•°
+	// ¶¨Ê±Æ÷ÓÃÓÚ¶¨Ê±µ÷ÓÃÖØ»æº¯Êı
 	this->timer.start(this->interval.count(), std::bind(&ProgressBar::show, this));
 }
 
-// é‡ç»˜å‡½æ•°
+// ÖØ»æº¯Êı
 void ProgressBar::show() {
-	// æ¸…é™¤ä¸Šæ¬¡çš„ç»˜åˆ¶å†…å®¹
+	// Çå³ıÉÏ´ÎµÄ»æÖÆÄÚÈİ
 	std::cout << "\r";
-	// è®°å½•é‡ç»˜çš„æ—¶é—´ç‚¹
+	// ¼ÇÂ¼ÖØ»æµÄÊ±¼äµã
 	steady_clock::time_point now = steady_clock::now();
-	// è·å–å·²å®Œæˆçš„æ•°é‡
+	// »ñÈ¡ÒÑÍê³ÉµÄÊıÁ¿
 	unsigned int tmpFinished = this->finishedNum.load();
-	// è·å–ä¸å¼€å§‹æ—¶é—´å’Œä¸Šæ¬¡é‡ç»˜æ—¶é—´çš„æ—¶é—´é—´éš”
+	// »ñÈ¡Óë¿ªÊ¼Ê±¼äºÍÉÏ´ÎÖØ»æÊ±¼äµÄÊ±¼ä¼ä¸ô
 	auto timeFromStart = now - this->beginTime;
 	auto timeFromLast = now - this->lastTime;
-	// è¿™æ¬¡å®Œæˆçš„æ•°é‡
+	// Õâ´ÎÍê³ÉµÄÊıÁ¿
 	unsigned int gap = tmpFinished - this->lastNum;
-	// è®¡ç®—é€Ÿåº¦
+	// ¼ÆËãËÙ¶È
 	double rate = gap / duration<double>(timeFromLast).count();
-	// åº”æ˜¾ç¤ºçš„ç™¾åˆ†æ•°
+	// Ó¦ÏÔÊ¾µÄ°Ù·ÖÊı
 	double present = (100.0 * tmpFinished) / this->totalNum;
-	// æ‰“å°ç™¾åˆ†æ•°
+	// ´òÓ¡°Ù·ÖÊı
 	std::cout << std::setprecision(1) << std::fixed << present << "%|";
-	// è®¡ç®—åº”è¯¥ç»˜åˆ¶å¤šå°‘=ç¬¦å·
+	// ¼ÆËãÓ¦¸Ã»æÖÆ¶àÉÙ=·ûºÅ
 	int barWidth = present * this->colsRatio;
-	// æ‰“å°å·²å®Œæˆå’Œæœªå®Œæˆè¿›åº¦æ¡
+	// ´òÓ¡ÒÑÍê³ÉºÍÎ´Íê³É½ø¶ÈÌõ
 	std::cout << std::setw(barWidth) << std::setfill('=') << "=";
 	std::cout << std::setw(this->ncols - barWidth) << std::setfill(' ') << "|";
 
-	// æ‰“å°é€Ÿåº¦
+	// ´òÓ¡ËÙ¶È
 	std::cout << std::setprecision(1) << std::fixed << rate << "op/s|";
-	// ä¹‹åçš„ä¸¤éƒ¨åˆ†å†…å®¹åˆ†åˆ«ä¸ºæ‰“å°å·²è¿‡çš„æ—¶é—´å’Œå‰©ä½™æ—¶é—´
+	// Ö®ºóµÄÁ½²¿·ÖÄÚÈİ·Ö±ğÎª´òÓ¡ÒÑ¹ıµÄÊ±¼äºÍÊ£ÓàÊ±¼ä
 	int timeFromStartCount = duration<double>(timeFromStart).count();
 
 	std::time_t tfs = timeFromStartCount;
@@ -45,7 +45,7 @@ void ProgressBar::show() {
 
 	int timeLast;
 	if (rate != 0) {
-		// å‰©ä½™æ—¶é—´çš„ä¼°è®¡æ˜¯ç”¨è¿™æ¬¡çš„é€Ÿåº¦å’Œæœªå®Œæˆçš„æ•°é‡è¿›è¡Œä¼°è®¡
+		// Ê£ÓàÊ±¼äµÄ¹À¼ÆÊÇÓÃÕâ´ÎµÄËÙ¶ÈºÍÎ´Íê³ÉµÄÊıÁ¿½øĞĞ¹À¼Æ
 		timeLast = (this->totalNum - tmpFinished) / rate;
 	}
 	else {
@@ -68,7 +68,7 @@ void ProgressBar::show() {
 }
 
 void ProgressBar::finish() {
-	// åœæ­¢å®šæ—¶å™¨
+	// Í£Ö¹¶¨Ê±Æ÷
 	this->timer.stop();
 	std::cout << std::endl;
 }

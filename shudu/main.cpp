@@ -5,7 +5,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	InputHandler ih;
-	cout << "è¯·è¾“å…¥å­˜å‚¨æ–‡ä»¶çš„ç»å¯¹è·¯å¾„:" << endl;
+	cout << "ÇëÊäÈë´æ´¢ÎÄ¼þµÄ¾ø¶ÔÂ·¾¶:" << endl;
 	string abs;
 	cin >> abs;
 	ih.setAbsPath(abs);

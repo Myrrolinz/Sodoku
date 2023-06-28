@@ -50,8 +50,8 @@ int SolverHandler::getMask(int i, int j) {
 }
 
 void SolverHandler::clean() {
-    //æ¸…ç©ºæ•°ç»„
-    //æ¸…ç©ºrowã€colã€patch
+    //Çå¿ÕÊı×é
+    //Çå¿Õrow¡¢col¡¢patch
     for (int i = 0; i < 9; i++) {
         row[i] = 0;
         col[i] = 0;
@@ -60,7 +60,7 @@ void SolverHandler::clean() {
             matrix[i][j] = 0;
         }
     }
-    // æ¸…ç©ºæ ˆ
+    // Çå¿ÕÕ»
     while (!blank.empty()) {
         blank.pop();
     }
