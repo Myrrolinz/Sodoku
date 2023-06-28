@@ -6,35 +6,35 @@
 using namespace std;
 
 void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {
-	/*æ€è·¯ï¼šä»beginNumå¼€å§‹æŒ–ç©ºï¼Œ
-	å¦‚æœéœ€è¦åˆ¤æ–­unionï¼š
-	åˆ¤æ–­ä¸æˆç«‹åï¼Œé‡æ–°è¿­ä»£100æ¬¡ï¼Œ
-	è¶…è¿‡100æ¬¡åˆ™æŒ–ç©ºæ•°+1åé‡æ–°ç”Ÿæˆ
-	ç›´è‡³endNum*/
+	/*Ë¼Â·£º´ÓbeginNum¿ªÊ¼ÍÚ¿Õ£¬
+	Èç¹ûĞèÒªÅĞ¶Ïunion£º
+	ÅĞ¶Ï²»³ÉÁ¢ºó£¬ÖØĞÂµü´ú100´Î£¬
+	³¬¹ı100´ÎÔòÍÚ¿ÕÊı+1ºóÖØĞÂÉú³É
+	Ö±ÖÁendNum*/
 	fstream infile(absolatePath+FinalPath, ios::in);
 	fstream outfile(absolatePath+outputPath, ios::out);
 	if (!infile.is_open()) {
-		cout << "æœªæ‰¾åˆ°è¾“å…¥æ–‡ä»¶çš„è·¯å¾„ï¼" << endl;
+		cout << "Î´ÕÒµ½ÊäÈëÎÄ¼şµÄÂ·¾¶!" << endl;
 	}
 	if (!outfile.is_open()) {
-		cout << "æ–‡ä»¶æ‰“å¼€å¤±è´¥ï¼" << endl;
+		cout << "ÎÄ¼ş´ò¿ªÊ§°Ü!" << endl;
 		return;
 	}
-	cout << "---------------æ­£åœ¨ç”Ÿæˆ" << num << "ä¸ªæ•°ç‹¬é¢˜ç›®---------------" << endl;
-	input(infile);//å°†ç»ˆå±€è¯»å…¥matrixæ•°ç»„
+	cout << "---------------ÕıÔÚÉú³É" << num << "¸öÊı¶ÀÌâÄ¿---------------" << endl;
+	input(infile);//½«ÖÕ¾Ö¶ÁÈëmatrixÊı×é
 	infile.close();
 	if (isUnion == false) {
 		for (int i = 0; i < num; i++) {
-			//åœ¨èŒƒå›´å†…éšæœºç”ŸæˆæŒ–ç©ºä¸ªæ•°
+			//ÔÚ·¶Î§ÄÚËæ»úÉú³ÉÍÚ¿Õ¸öÊı
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			
-			//æŒ–current_HoleNumä¸ªæ´
+			//ÍÚcurrent_HoleNum¸ö¶´
 			holehole();
 			
-			//éšæœºæŒ‘é€‰ä¸€ä¸ªç»ˆå±€
+			//Ëæ»úÌôÑ¡Ò»¸öÖÕ¾Ö
 			SelectFinal();
 		
-			//å°†ç»ˆå±€æŒ–ç©ºåçš„ç»“æœè¾“å‡ºåˆ°æ–‡ä»¶
+			//½«ÖÕ¾ÖÍÚ¿ÕºóµÄ½á¹ûÊä³öµ½ÎÄ¼ş
 			for (int row = 0; row < 9; row++) {
 				if (holeboard[row][0] == 1) {
 					outfile << " $";
@@ -57,14 +57,14 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 		outfile.close();
 	}
 	else {
-		//ä½¿ç”¨å›æº¯æ³•ç”Ÿæˆå”¯ä¸€è§£çš„æ•°ç‹¬
+		//Ê¹ÓÃ»ØËİ·¨Éú³ÉÎ¨Ò»½âµÄÊı¶À
 		vector<std::vector<int>> board;
 		for (int t = 0; t < num; t++) {
-			//åœ¨èŒƒå›´å†…éšæœºç”ŸæˆæŒ–ç©ºä¸ªæ•°
+			//ÔÚ·¶Î§ÄÚËæ»úÉú³ÉÍÚ¿Õ¸öÊı
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			generateSudoku(board);
 			holehole();
-			//std::cout << std::endl << "æ•°ç‹¬æ¸¸æˆé¢˜ç›® #" << i + 1 << ":" << std::endl;
+			//std::cout << std::endl << "Êı¶ÀÓÎÏ·ÌâÄ¿ #" << i + 1 << ":" << std::endl;
 			for (int row = 0; row < 9; row++) {
 				for (int col = 0; col < 9; col++) {
 
@@ -78,12 +78,12 @@ void Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 }
 
 int Generatehandler::generateRandomNumber(int min, int max) {
-	// è®¾ç½®éšæœºæ•°å¼•æ“å’Œåˆ†å¸ƒ
+	// ÉèÖÃËæ»úÊıÒıÇæºÍ·Ö²¼
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(min, max);
 
-	// ç”Ÿæˆéšæœºæ•°
+	// Éú³ÉËæ»úÊı
 	int randomNumber = dis(gen);
 	return randomNumber;
 }
@@ -108,21 +108,21 @@ void Generatehandler::output(fstream& outfile, vector<std::vector<int>>& board) 
 	outfile << endl;
 }
 bool Generatehandler::isValid(const std::vector<std::vector<int>>& board, int row, int col, int num) {
-	// æ£€æŸ¥è¡Œæ˜¯å¦æœ‰é‡å¤æ•°å­—
+	// ¼ì²éĞĞÊÇ·ñÓĞÖØ¸´Êı×Ö
 	for (int i = 0; i < 9; ++i) {
 		if (board[row][i] == num) {
 			return false;
 		}
 	}
 
-	// æ£€æŸ¥åˆ—æ˜¯å¦æœ‰é‡å¤æ•°å­—
+	// ¼ì²éÁĞÊÇ·ñÓĞÖØ¸´Êı×Ö
 	for (int i = 0; i < 9; ++i) {
 		if (board[i][col] == num) {
 			return false;
 		}
 	}
 
-	// æ£€æŸ¥å°ä¹å®«æ ¼æ˜¯å¦æœ‰é‡å¤æ•°å­—
+	// ¼ì²éĞ¡¾Å¹¬¸ñÊÇ·ñÓĞÖØ¸´Êı×Ö
 	int startRow = row - row % 3;
 	int startCol = col - col % 3;
 	for (int i = 0; i < 3; ++i) {
@@ -133,69 +133,69 @@ bool Generatehandler::isValid(const std::vector<std::vector<int>>& board, int ro
 		}
 	}
 
-	return true;  // å¯ä»¥æ”¾ç½®æ•°å­—
+	return true;  // ¿ÉÒÔ·ÅÖÃÊı×Ö
 }
 
 bool Generatehandler::solveSudoku(std::vector<std::vector<int>>& board) {
 	for (int row = 0; row < 9; ++row) {
 		for (int col = 0; col < 9; ++col) {
-			if (board[row][col] == 0) {  // å½“å‰ä½ç½®ä¸ºç©º
-				for (int num = 1; num <= 9; ++num) {  // å°è¯•æ•°å­— 1 åˆ° 9
+			if (board[row][col] == 0) {  // µ±Ç°Î»ÖÃÎª¿Õ
+				for (int num = 1; num <= 9; ++num) {  // ³¢ÊÔÊı×Ö 1 µ½ 9
 					if (isValid(board, row, col, num)) {
-						board[row][col] = num;  // æ”¾ç½®æ•°å­—
+						board[row][col] = num;  // ·ÅÖÃÊı×Ö
 
 						if (solveSudoku(board)) {
-							return true;  // æ‰¾åˆ°è§£
+							return true;  // ÕÒµ½½â
 						}
 
-						board[row][col] = 0;  // å›æº¯ï¼Œé‡ç½®ä¸ºç©º
+						board[row][col] = 0;  // »ØËİ£¬ÖØÖÃÎª¿Õ
 					}
 				}
 
-				return false;  // æ— è§£
+				return false;  // ÎŞ½â
 			}
 		}
 	}
 
-	return true;  // å®Œæˆæ•°ç‹¬
+	return true;  // Íê³ÉÊı¶À
 }
 void Generatehandler::generateSudoku(std::vector<std::vector<int>>& board) {
-	std::srand(std::time(0));  // è®¾ç½®éšæœºæ•°ç§å­
+	std::srand(std::time(0));  // ÉèÖÃËæ»úÊıÖÖ×Ó
 
-	// æ¸…ç©ºæ•°ç‹¬æ¸¸æˆ
+	// Çå¿ÕÊı¶ÀÓÎÏ·
 	board.clear();
 	board.resize(9, std::vector<int>(9, 0));
 
-	// éšæœºå¡«å……ç¬¬ä¸€è¡Œ
+	// Ëæ»úÌî³äµÚÒ»ĞĞ
 	for (int col = 0; col < 9; ++col) {
 		board[0][col] = col + 1;
 	}
 
-	// æ··æ´—ç¬¬ä¸€è¡Œçš„æ•°å­—
+	// »ìÏ´µÚÒ»ĞĞµÄÊı×Ö
 	std::random_shuffle(board[0].begin(), board[0].end());
 
-	// ç”Ÿæˆå”¯ä¸€è§£çš„æ•°ç‹¬æ¸¸æˆ
+	// Éú³ÉÎ¨Ò»½âµÄÊı¶ÀÓÎÏ·
 	solveSudoku(board);
 }
 
 void Generatehandler::holehole() {
-	//ç½®é›¶
+	//ÖÃÁã
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			holeboard[i][j] = 0;
 		}
 	}
-	//å…ˆæŒ–æ‰ï¼Œæ¯è¡ŒæŒ–ä¸¤ä¸ªï¼Œå†ä»å‰©ä½™çš„ç©ºä¸­æŒ–
+	//ÏÈÍÚµô£¬Ã¿ĞĞÍÚÁ½¸ö£¬ÔÙ´ÓÊ£ÓàµÄ¿ÕÖĞÍÚ
 	for (int i = 0; i < 9; i++) {
-		// è®¾ç½®ç§å­ï¼Œç¡®ä¿æ¯æ¬¡è¿è¡Œç”Ÿæˆçš„éšæœºæ•°åºåˆ—ä¸åŒ
+		// ÉèÖÃÖÖ×Ó£¬È·±£Ã¿´ÎÔËĞĞÉú³ÉµÄËæ»úÊıĞòÁĞ²»Í¬
 		std::srand(static_cast<unsigned int>(std::time(nullptr)));
-		// ç”Ÿæˆ1åˆ°9ä¹‹é—´çš„éšæœºæ•°
+		// Éú³É1µ½9Ö®¼äµÄËæ»úÊı
 		int hole1 = generateRandomNumber(0, 8);
 		int hole2 = generateRandomNumber(0, 8);
 		while (hole1 == hole2) {
 			hole2 = generateRandomNumber(0, 8);
 		}
-		//å°†è¿™ä¸¤ä¸ªä½ç½®è®¾ç½®ä¸ºæŒ–å»çŠ¶æ€
+		//½«ÕâÁ½¸öÎ»ÖÃÉèÖÃÎªÍÚÈ¥×´Ì¬
 		holeboard[i][hole1] = 1;
 		holeboard[i][hole2] = 1;
 	}
@@ -215,15 +215,15 @@ void Generatehandler::holehole() {
 }
 
 void Generatehandler::input(fstream& file) {
-	//è·å–ä¸€ä¸ªç»ˆå±€ï¼Œå°†å…¶å­˜å…¥matrixæ•°ç»„
+	//»ñÈ¡Ò»¸öÖÕ¾Ö£¬½«Æä´æÈëmatrixÊı×é
 	string line;
 	int a=0, b=0, c=0;//[a][b][c]
 	bool isbreak = false;
 	while (std::getline(file, line)) {
 		if (line.empty()) {
-			// é‡åˆ°ç©ºè¡Œæ—¶ï¼Œè·³è¿‡å¹¶å¤„ç†ä¸‹ä¸€ç»„æ•°æ®
-			// è¿™é‡Œå¯ä»¥å°†numberså­˜å‚¨åˆ°é€‚å½“çš„æ•°æ®ç»“æ„ä¸­ï¼Œæˆ–è¿›è¡Œå…¶ä»–æ“ä½œ
-			// æ¸…ç©ºnumbersä»¥å‡†å¤‡ä¸‹ä¸€ç»„æ•°æ®çš„è¯»å–
+			// Óöµ½¿ÕĞĞÊ±£¬Ìø¹ı²¢´¦ÀíÏÂÒ»×éÊı¾İ
+			// ÕâÀï¿ÉÒÔ½«numbers´æ´¢µ½ÊÊµ±µÄÊı¾İ½á¹¹ÖĞ£¬»ò½øĞĞÆäËû²Ù×÷
+			// Çå¿ÕnumbersÒÔ×¼±¸ÏÂÒ»×éÊı¾İµÄ¶ÁÈ¡
 			a++;
 			b = 0;
 			if (isbreak) {
@@ -243,7 +243,7 @@ void Generatehandler::input(fstream& file) {
 		}
 		
 		b++;
-		if (a > 100) {//åªå­˜100ä¸ªç»ˆå±€
+		if (a > 100) {//Ö»´æ100¸öÖÕ¾Ö
 			break;
 		}
 	}
@@ -264,7 +264,7 @@ int Generatehandler::isNum(const string& s) {
 }
 
 void Generatehandler::SelectFinal() {
-	//éšæœºæŒ‘é€‰ä¸€ä¸ªç»ˆå±€
-	std::srand(std::time(0));  // è®¾ç½®ç§å­ï¼Œç¡®ä¿æ¯æ¬¡è¿è¡Œç”Ÿæˆçš„éšæœºæ•°åºåˆ—ä¸åŒ
-	current_selectFinal = generateRandomNumber(0, FinalNum);  // ç”Ÿæˆ1åˆ°100ä¹‹é—´çš„éšæœºæ•°
+	//Ëæ»úÌôÑ¡Ò»¸öÖÕ¾Ö
+	std::srand(std::time(0));  // ÉèÖÃÖÖ×Ó£¬È·±£Ã¿´ÎÔËĞĞÉú³ÉµÄËæ»úÊıĞòÁĞ²»Í¬
+	current_selectFinal = generateRandomNumber(0, FinalNum);  // Éú³É1µ½100Ö®¼äµÄËæ»úÊı
 }

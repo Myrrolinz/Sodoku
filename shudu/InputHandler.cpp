@@ -19,11 +19,11 @@ inline void output(fstream& f, int* line, int* offset) {
 }
 
 void InputHandler::check(int argc, char** argv) {
-	/*åªæœ‰ä¸€ä¸ªå‚æ•°:
-	-c num:ç”Ÿæˆnumä¸ªç»ˆç›˜
-	-s game.txt:ä»game.txtè¯»å–è‹¥å¹²æ•°ç‹¬æ¸¸æˆï¼Œå¹¶ç»™å‡ºè§£ç­”ï¼Œå­˜å‚¨åˆ°shudu.txtä¸­
-	-n num:ç”Ÿæˆnumä¸ªæ•°ç‹¬æ¸¸æˆï¼Œå­˜å‚¨åˆ°game.txtä¸­
-	-r æŒ–ç©ºï¼ša-b
+	/*Ö»ÓĞÒ»¸ö²ÎÊı:
+	-c num:Éú³Énum¸öÖÕÅÌ
+	-s game.txt:´Ógame.txt¶ÁÈ¡Èô¸ÉÊı¶ÀÓÎÏ·£¬²¢¸ø³ö½â´ğ£¬´æ´¢µ½shudu.txtÖĞ
+	-n num:Éú³Énum¸öÊı¶ÀÓÎÏ·£¬´æ´¢µ½game.txtÖĞ
+	-r ÍÚ¿Õ£ºa-b
 	*/
 	generator.setAbsPath(absolatePath);
 	if (argc == 3) {
@@ -32,22 +32,22 @@ void InputHandler::check(int argc, char** argv) {
 		if (parameter1 == "-c") {//done
 			int n = isNum(parameter2);
 			if (n <= 0 || n > 1000000)
-				cout << "ä¸æ»¡è¶³0<n<=1000000ï¼" << endl;
+				cout << "²»Âú×ã0<n<=1000000!" << endl;
 			else {
 				// FianlMaker fm;
 				// fm.make(n);
 				getFinal(n);
-				cout << "å·²ç”Ÿæˆ" + parameter2 + "ä¸ªæ•°ç‹¬ç»ˆç›˜" << endl;
+				cout << "ÒÑÉú³É" << parameter2 << "¸öÊı¶ÀÖÕÅÌ" << endl;
 			}
 		}
 		else if (parameter1 == "-s") {
 			fstream infile(absolatePath+parameter2, ios::in);
 			fstream outfile(absolatePath + AnsPath, ios::out);
 			if (!infile.is_open()) {
-				cout << "æ–‡ä»¶æ‰“å¼€å¤±è´¥ï¼" << endl;
+				cout << "ÎÄ¼ş´ò¿ªÊ§°Ü!" << endl;
 				return;
 			}
-			cout << "æ­£åœ¨æ±‚è§£ï¼Œè¯·ç¨å€™..." << endl;
+			cout << "ÕıÔÚÇó½â£¬ÇëÉÔºò..." << endl;
 			int i = 1;
 			while (infile.peek() != EOF) {
 				board.input(infile);
@@ -56,18 +56,18 @@ void InputHandler::check(int argc, char** argv) {
 					board.output(outfile);
 				}
 				else {
-					cout << "ç¬¬" << i << "ä¸ªæ•°ç‹¬æ— è§£ï¼" << endl;
+					cout << "µÚ" << i << "¸öÊı¶ÀÎŞ½â!" << endl;
 					outfile << "No solution" << endl << endl;
 				}
 				i++;
 				board.clean();
 			}
-			cout << "å®Œæˆæ±‚è§£ï¼" << endl;
+			cout << "Íê³ÉÇó½â!" << endl;
 			infile.close();
 			outfile.close();
 		}
 		else {
-			cout << "è¾“å…¥æœ‰è¯¯ï¼" << endl;
+			cout << "ÊäÈëÓĞÎó!" << endl;
 		}
 	}
 	else if (argc == 4) {
@@ -82,12 +82,12 @@ void InputHandler::check(int argc, char** argv) {
 			parm1 = arg2;
 		}
 		else {
-			cout << "è¾“å…¥å‚æ•°æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+			cout << "ÊäÈë²ÎÊıÓĞÎó£¬ÇëÖØĞÂÊäÈë!" << endl;
 			return;
 		}
 		int n = isNum(parm1);
 		if (n <= 0 || n > 1000000) {
-			cout << "ç”Ÿæˆæ•°ç‹¬é¢˜åº“æ•°é‡ä¸è§„èŒƒ(0<n<1000000)ï¼è¯·é‡æ–°è¾“å…¥ç”Ÿæˆæ•°" << endl;
+			cout << "Éú³ÉÊı¶ÀÌâ¿âÊıÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØĞÂÊäÈëÉú³ÉÊı" << endl;
 			return;
 		}
 		generator.generate(n, 18, 64, true);
@@ -101,13 +101,13 @@ void InputHandler::check(int argc, char** argv) {
 		if (arg1 == "-n") {
 			int n = isNum(parm1);
 			if (n <= 0 || n > 1000000) {
-				cout << "ç”Ÿæˆæ•°ç‹¬é¢˜åº“æ•°é‡ä¸è§„èŒƒ(0<n<1000000)ï¼è¯·é‡æ–°è¾“å…¥ç”Ÿæˆæ•°" << endl;
+				cout << "Éú³ÉÊı¶ÀÌâ¿âÊıÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØĞÂÊäÈëÉú³ÉÊı" << endl;
 				return;
 			}
 			if (arg2 == "-r") {
 				string begin, end;
 				bool isBegin = true;
-				//å°†èŒƒå›´"a-b"è½¬ä¸ºï¼ša  b
+				//½«·¶Î§"a-b"×ªÎª£ºa  b
 				for (int i = 0; i < param2.length(); i++) {
 					if (param2[i] == '-') {
 						isBegin = false;
@@ -122,25 +122,25 @@ void InputHandler::check(int argc, char** argv) {
 					}
 				}
 				if (begin.length() == 0 || end.length() == 0) {
-					cout << "[-r]é¡¹å‚æ•°ä¸è§„èŒƒï¼Œåº”è¾“å…¥a-bå½¢å¼çš„å‚æ•°ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+					cout << "[-r]Ïî²ÎÊı²»¹æ·¶£¬Ó¦ÊäÈëa-bĞÎÊ½µÄ²ÎÊı£¬ÇëÖØĞÂÊäÈë!" << endl;
 					return;
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
 				if (begin_num <= 0 || end_num <= 0|| begin_num > end_num) {
-					cout << "[-r]é¡¹å‚æ•°ä¸è§„èŒƒï¼Œåº”è¾“å…¥a-bå½¢å¼çš„æ­£æ•´æ•°ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+					cout << "[-r]Ïî²ÎÊı²»¹æ·¶£¬Ó¦ÊäÈëa-bĞÎÊ½µÄÕıÕûÊı£¬ÇëÖØĞÂÊäÈë!" << endl;
 					return;
 				}
 				else {
 					generator.generate(n, begin_num, end_num,false);
-					cout << "å·²ç”Ÿæˆ" + parm1 + "ä¸ªæ•°ç‹¬æ¸¸æˆï¼ŒæŒ–ç©ºèŒƒå›´åœ¨["<<begin_num<<","<<end_num<<"]ä¹‹é—´" << endl;
+					cout << "ÒÑÉú³É" << parm1 << "¸öÊı¶ÀÓÎÏ·£¬ÍÚ¿Õ·¶Î§ÔÚ["<<begin_num<<", "<<end_num<<"]Ö®¼ä" << endl;
 				}
 			}
 			else if (arg2 == "-m") {
-				//é€‰æ‹©éš¾åº¦çš„æ—¶å€™ï¼Œåˆ†ä¸º3æ¡£
-				/*ç¬¬ä¸€æ¡£ï¼šæŒ–ç©ºåœ¨5-18ä¹‹é—´(å› æ­¤ä¸èƒ½è¦æ±‚å”¯ä¸€è§£)
-				  ç¬¬äºŒæ¡£ï¼šæŒ–ç©ºåœ¨18-32ä¹‹é—´
-				  ç¬¬ä¸‰æ¡£ï¼šæŒ–ç©ºåœ¨33-64ä¹‹é—´
+				//Ñ¡ÔñÄÑ¶ÈµÄÊ±ºò£¬·ÖÎª3µµ
+				/*µÚÒ»µµ£ºÍÚ¿ÕÔÚ5-18Ö®¼ä(Òò´Ë²»ÄÜÒªÇóÎ¨Ò»½â)
+				  µÚ¶şµµ£ºÍÚ¿ÕÔÚ18-32Ö®¼ä
+				  µÚÈıµµ£ºÍÚ¿ÕÔÚ33-64Ö®¼ä
 				  */
 				int level = isNum(param2);
 				
@@ -155,19 +155,19 @@ void InputHandler::check(int argc, char** argv) {
 					generator.generate(n, 33, 64,false);
 				}
 				else {
-					cout << "è¾“å…¥çš„éš¾åº¦ä¸ç¬¦åˆè§„èŒƒï¼Œåº”ä¸º1-3ä¹‹é—´çš„æ•´æ•°ï¼" << endl;
+					cout << "ÊäÈëµÄÄÑ¶È²»·ûºÏ¹æ·¶£¬Ó¦Îª1-3Ö®¼äµÄÕûÊı!" << endl;
 					return;
 				}
 				
 			}
 			else {
-				cout << "è¾“å…¥æœ‰è¯¯ï¼å­˜åœ¨æœªå®šä¹‰çš„é€‰é¡¹" << endl;
+				cout << "ÊäÈëÓĞÎó!´æÔÚÎ´¶¨ÒåµÄÑ¡Ïî" << endl;
 				return;
 			}
 		}
 	}
 	else if (argc == 6) {
-		//é¦–å…ˆéœ€è¦ç¡®å®š-uçš„ä½ç½®
+		//Ê×ÏÈĞèÒªÈ·¶¨-uµÄÎ»ÖÃ
 		int upos = 1;
 		bool isUnion = false;
 		string arg1, param1, arg2, param2;
@@ -179,7 +179,7 @@ void InputHandler::check(int argc, char** argv) {
 			}
 		}
 		if (!isUnion) {
-			cout << "è¾“å…¥å‘½ä»¤è¡Œæ ¼å¼é”™è¯¯ï¼Œå‡ºç°å•æ•°ä¸ªå‚æ•°ä½†æœªå‡ºç°[-u]ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+			cout << "ÊäÈëÃüÁîĞĞ¸ñÊ½´íÎó£¬³öÏÖµ¥Êı¸ö²ÎÊıµ«Î´³öÏÖ[-u]£¬ÇëÖØĞÂÊäÈë!" << endl;
 			return;
 		}
 		if (upos == 1) {
@@ -201,11 +201,11 @@ void InputHandler::check(int argc, char** argv) {
 			param2 = argv[4];
 		}
 		else {
-			cout << "è¾“å…¥å‘½ä»¤è¡Œæ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+			cout << "ÊäÈëÃüÁîĞĞ¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë!" << endl;
 			return;
 		}
 		if (arg1 == "-n" || arg2 == "-n") {
-			if (arg2 == "-n") {//è°ƒæ•´å‚æ•°é¡ºåº
+			if (arg2 == "-n") {//µ÷Õû²ÎÊıË³Ğò
 				string temp_argv = arg1;
 				string temp_param = param1;
 				arg1 = arg2;
@@ -220,13 +220,13 @@ void InputHandler::check(int argc, char** argv) {
 			cout << "param2:" << param2 << endl;
 			cout << n << endl;*/
 			if (n <= 0 || n > 1000000) {
-				cout << "ç”Ÿæˆæ•°ç‹¬é¢˜åº“æ•°é‡ä¸è§„èŒƒ(0<n<1000000)ï¼è¯·é‡æ–°è¾“å…¥ç”Ÿæˆæ•°" << endl;
+				cout << "Éú³ÉÊı¶ÀÌâ¿âÊıÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØĞÂÊäÈëÉú³ÉÊı" << endl;
 				return;
 			}
 			if (arg2 == "-r") {
 				string begin, end;
 				bool isBegin = true;
-				//å°†èŒƒå›´"a-b"è½¬ä¸ºï¼ša  b
+				//½«·¶Î§"a-b"×ªÎª£ºa  b
 				for (int i = 0; i < param2.length(); i++) {
 					if (param2[i] == '-') {
 						isBegin = false;
@@ -241,25 +241,25 @@ void InputHandler::check(int argc, char** argv) {
 					}
 				}
 				if (begin.length() == 0 || end.length() == 0) {
-					cout << "[-r]é¡¹å‚æ•°ä¸è§„èŒƒï¼Œåº”è¾“å…¥a-bå½¢å¼çš„å‚æ•°ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+					cout << "[-r]Ïî²ÎÊı²»¹æ·¶£¬Ó¦ÊäÈëa-bĞÎÊ½µÄ²ÎÊı£¬ÇëÖØĞÂÊäÈë!" << endl;
 					return;
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
 				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num>64) {
-					cout << "å­˜åœ¨-ré¡¹ä¸è§„èŒƒé—®é¢˜ï¼šå¯èƒ½åŸå› 1.èŒƒå›´è®¾ç½®æœ‰è¯¯2.è¯¥èŒƒå›´æ— æ³•ç”Ÿæˆå”¯ä¸€è§£(è¯·å°†èŒƒå›´è®¾ç½®åœ¨18-64)" << endl;
+					cout << "´æÔÚ-rÏî²»¹æ·¶ÎÊÌâ£º¿ÉÄÜÔ­Òò1.·¶Î§ÉèÖÃÓĞÎó2.¸Ã·¶Î§ÎŞ·¨Éú³ÉÎ¨Ò»½â(Çë½«·¶Î§ÉèÖÃÔÚ18-64)" << endl;
 					return;
 				}
 				else {
 					generator.generate(n, begin_num, end_num, isUnion);
-					cout << "å·²ç”Ÿæˆ" + param1 + "ä¸ªå…·æœ‰å”¯ä¸€è§£æ•°ç‹¬æ¸¸æˆï¼ŒæŒ–ç©ºèŒƒå›´åœ¨[" << begin_num << "," << end_num << "]ä¹‹é—´" << endl;
+					cout << "ÒÑÉú³É" << param1 << "¸ö¾ßÓĞÎ¨Ò»½âÊı¶ÀÓÎÏ·£¬ÍÚ¿Õ·¶Î§ÔÚ[" << begin_num << "," << end_num << "]Ö®¼ä" << endl;
 				}
 			}
 			else if (arg2 == "-m") {
-				//é€‰æ‹©éš¾åº¦çš„æ—¶å€™ï¼Œåˆ†ä¸º3æ¡£
-				/*ç¬¬ä¸€æ¡£ï¼šæŒ–ç©ºåœ¨5-18ä¹‹é—´(å› æ­¤ä¸èƒ½è¦æ±‚å”¯ä¸€è§£)
-				  ç¬¬äºŒæ¡£ï¼šæŒ–ç©ºåœ¨18-32ä¹‹é—´
-				  ç¬¬ä¸‰æ¡£ï¼šæŒ–ç©ºåœ¨33-64ä¹‹é—´
+				//Ñ¡ÔñÄÑ¶ÈµÄÊ±ºò£¬·ÖÎª3µµ
+				/*µÚÒ»µµ£ºÍÚ¿ÕÔÚ5-18Ö®¼ä(Òò´Ë²»ÄÜÒªÇóÎ¨Ò»½â)
+				  µÚ¶şµµ£ºÍÚ¿ÕÔÚ18-32Ö®¼ä
+				  µÚÈıµµ£ºÍÚ¿ÕÔÚ33-64Ö®¼ä
 				  */
 				int level = isNum(param2);
 
@@ -274,23 +274,23 @@ void InputHandler::check(int argc, char** argv) {
 					generator.generate(n, 33, 64,true);
 				}
 				else {
-					cout << "è¾“å…¥çš„éš¾åº¦ä¸ç¬¦åˆè§„èŒƒï¼Œåº”ä¸º1-3ä¹‹é—´çš„æ•´æ•°ï¼" << endl;
+					cout << "ÊäÈëµÄÄÑ¶È²»·ûºÏ¹æ·¶£¬Ó¦Îª1-3Ö®¼äµÄÕûÊı!" << endl;
 					return;
 				}
 			}
 			else {
-				cout << "è¾“å…¥æœ‰è¯¯ï¼å­˜åœ¨æœªå®šä¹‰çš„é€‰é¡¹" << endl;
+				cout << "ÊäÈëÓĞÎó!´æÔÚÎ´¶¨ÒåµÄÑ¡Ïî" << endl;
 				return;
 			}
 		}
 		else {
-			cout << "è¾“å…¥å‘½ä»¤è¡Œæ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+			cout << "ÊäÈëÃüÁîĞĞ¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë!" << endl;
 			return;
 		}
 		
 	}
 	else {
-		cout << "è¾“å…¥æœ‰è¯¯ï¼" << endl;
+		cout << "ÊäÈëÓĞÎó!" << endl;
 	}
 	return;
 }
@@ -310,7 +310,7 @@ int InputHandler::isNum(const string& s) {
 }
 
 void InputHandler::getFinal(int num) {
-	cout << "å¼€å§‹ç”Ÿæˆ" << num << "ä¸ªæ•°ç‹¬ç»ˆç›˜ï¼" << endl;
+	cout << "¿ªÊ¼Éú³É" << num << "¸öÊı¶ÀÖÕÅÌ!" << endl;
 
 	//Initialize prgress bar
 	milliseconds interval(1000);
@@ -320,7 +320,7 @@ void InputHandler::getFinal(int num) {
 	//Open output file
 	fstream outfile(absolatePath+FinalPath, ios::out);
 	if (!outfile.is_open()) {
-		cout << "æ–‡ä»¶æ‰“å¼€å¤±è´¥ï¼" << endl;
+		cout << "ÎÄ¼ş´ò¿ªÊ§°Ü!" << endl;
 		return;
 	}
 
@@ -336,7 +336,7 @@ void InputHandler::getFinal(int num) {
 				if ((--num) <= 0) {
 					outfile.close();
 					bar.show();
-					cout << "ç”Ÿæˆå®Œæˆï¼" << endl;
+					cout << "Éú³ÉÍê³É!" << endl;
 					return;
 				}
 				next_permutation(offset + 6, offset + 9);

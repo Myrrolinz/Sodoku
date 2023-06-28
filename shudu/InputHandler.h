@@ -17,7 +17,7 @@ public:
 	SolverHandler board;
 private:
 	int isNum(const string& s);
-	string absolatePath = "C:/Users/civilizwa/source/repos/shudu/shudu/";
+	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
 	string FinalPath = "final.txt";//存储终局
 	string AnsPath = "ans.txt";//存储求解答案
 	string QuexPath = "question.txt";//存储数独题目
