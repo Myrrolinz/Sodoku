@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <string>
 #include<math.h>
@@ -14,27 +14,27 @@ private:
 	string FinalPath = "final.txt";
 	string outputPath = "question.txt";
 	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
-	int FinalNum = 0;//ÖÕ¾ÖÊıÄ¿
-	int current_HoleNum = 0;//µ±Ç°ÍÚ¿ÕÊı
-	int current_selectFinal = 0;//µ±Ç°Ê¹ÓÃµÄÆåÅÌÖÕ¾Ö
-	int matrix[100][9][9] = { 0 };//¿ª±ÙÒ»¸ö´óÊı×é£¬´æ´¢×î¶à100¸öÖÕ¾Ö
-	int holeboard[9][9] = { 0 };//µ±Ç°ÍÚ¿ÕµÄÆåÅÌÎ»ÖÃ
+	int FinalNum = 0;//ç»ˆå±€æ•°ç›®
+	int current_HoleNum = 0;//å½“å‰æŒ–ç©ºæ•°
+	int current_selectFinal = 0;//å½“å‰ä½¿ç”¨çš„æ£‹ç›˜ç»ˆå±€
+	int matrix[100][9][9] = { 0 };//å¼€è¾Ÿä¸€ä¸ªå¤§æ•°ç»„ï¼Œå­˜å‚¨æœ€å¤š100ä¸ªç»ˆå±€
+	int holeboard[9][9] = { 0 };//å½“å‰æŒ–ç©ºçš„æ£‹ç›˜ä½ç½®
 public:
 	bool generate(int num, int beginNum, int endNum, bool isUnion);
-	void holehole();//ÍÚÑ½ÍÚÑ½ÍÚ
+	void holehole();//æŒ–å‘€æŒ–å‘€æŒ–
 	void input(fstream& f);
 	void output(fstream& f, vector<std::vector<int>>& board);
 	void SelectFinal();
 	int isNum(const string &s);
-	// ¼ì²éÔÚ¸ø¶¨Î»ÖÃ (row, col) ÊÇ·ñ¿ÉÒÔ·ÅÖÃÊı×Ö num
+	// æ£€æŸ¥åœ¨ç»™å®šä½ç½® (row, col) æ˜¯å¦å¯ä»¥æ”¾ç½®æ•°å­— num
 	bool isValid(const vector<std::vector<int>>& board, int row, int col, int num);
-	// Ê¹ÓÃ»ØËİËã·¨Éú³ÉÊı¶ÀÓÎÏ·µÄÎ¨Ò»½â
+	// ä½¿ç”¨å›æº¯ç®—æ³•ç”Ÿæˆæ•°ç‹¬æ¸¸æˆçš„å”¯ä¸€è§£
 	bool solveSudoku(vector<std::vector<int>>& board);
-	// Éú³ÉÊı¶ÀÓÎÏ·ÌâÄ¿
+	// ç”Ÿæˆæ•°ç‹¬æ¸¸æˆé¢˜ç›®
 	void generateSudoku(vector<std::vector<int>>& board);
-	//Éú³ÉÔÚmin-max·¶Î§¼äµÄËæ»úÊı
+	//ç”Ÿæˆåœ¨min-maxèŒƒå›´é—´çš„éšæœºæ•°
 	int generateRandomNumber(int min, int max);
-	//ÉèÖÃ¾ø¶ÔÂ·¾¶
+	//è®¾ç½®ç»å¯¹è·¯å¾„
 	void setAbsPath(string abs) {
 		absolatePath = abs;
 	}

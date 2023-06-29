@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <string>
 #include "GenerateHandler.h"
@@ -9,11 +9,11 @@ class InputHandler {
 public:
 	void check(int argc, char** argv);
 	void getFinal(int num);
-	//ÉèÖÃ¾ø¶ÔÂ·¾¶
+	//è®¾ç½®ç»å¯¹è·¯å¾„
 	void setAbsPath(string abs) {
 		absolatePath = abs;
 	}
-	Generatehandler generator;//¶¨ÒåÊı¶ÀÌâÄ¿Éú³ÉÆ÷
+	Generatehandler generator;//å®šä¹‰æ•°ç‹¬é¢˜ç›®ç”Ÿæˆå™¨
 	SolverHandler board;
 	int GetNum();
 	char GetType1();
@@ -24,9 +24,9 @@ public:
 private:
 	int isNum(const string& s);
 	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
-	string FinalPath = "final.txt";//´æ´¢ÖÕ¾Ö
-	string AnsPath = "ans.txt";//´æ´¢Çó½â´ğ°¸
-	string QuexPath = "question.txt";//´æ´¢Êı¶ÀÌâÄ¿
+	string FinalPath = "final.txt";//å­˜å‚¨ç»ˆå±€
+	string AnsPath = "ans.txt";//å­˜å‚¨æ±‚è§£ç­”æ¡ˆ
+	string QuexPath = "question.txt";//å­˜å‚¨æ•°ç‹¬é¢˜ç›®
 	char type1 = 'y';
 	char type2 = 'y';
 	int num = 20;

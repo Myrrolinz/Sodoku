@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <sstream>
 #include <fstream>
 #include "SolveHandler.h"
@@ -50,8 +50,8 @@ int SolverHandler::getMask(int i, int j) {
 }
 
 void SolverHandler::clean() {
-    //Çå¿ÕÊı×é
-    //Çå¿Õrow¡¢col¡¢patch
+    //æ¸…ç©ºæ•°ç»„
+    //æ¸…ç©ºrowã€colã€patch
     for (int i = 0; i < 9; i++) {
         row[i] = 0;
         col[i] = 0;
@@ -60,7 +60,7 @@ void SolverHandler::clean() {
             matrix[i][j] = 0;
         }
     }
-    // Çå¿ÕÕ»
+    // æ¸…ç©ºæ ˆ
     while (!blank.empty()) {
         blank.pop();
     }
