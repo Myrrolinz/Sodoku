@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>timer.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+ï»¿// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+// Descriptionï¼Sudoku Game
+// Authorï¼GYM, SJQ
+// Date:2023-6
+// Modify Record:
+#pragma once
+#include &lt;functional&gt;
+#include &lt;chrono&gt;
+#include &lt;thread&gt;
+#include &lt;atomic&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;condition_variable&gt;
+
+using namespace std::chrono;
+
+class Timer
+{
+public:
+<span style = "background-color:#fdd">	Timer() : _expired(true), _try_to_expire(false)
+	{}</span>
+
+	Timer(const Timer&amp; timer)
+	{
+		_expired = timer._expired.load();
+		_try_to_expire = timer._try_to_expire.load();
+	}
+
+	~Timer()
+<span style = "background-color:#fdd">	{
+		stop();
+	}</span>
+
+	void start(int interval, std::function&lt;void()&gt; task)
+<span style = "background-color:#fdd">	{</span>
+		// is started, do not start again
+<span style = "background-color:#fdd">		if (_expired == false)
+			return;</span>
+
+		// start async timer, launch thread and wait in that thread
+<span style = "background-color:#fdd">		_expired = false;
+		std::thread([this, interval, task]() {
+			while (!_try_to_expire)</span>
+			{
+				// sleep every interval and do the task again and again until times up
+<span style = "background-color:#fdd">				std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+				task();
+			}</span>
+
+			{
+				// timer be stopped, update the condition variable expired and wake main thread
+<span style = "background-color:#fdd">				std::lock_guard&lt;std::mutex&gt; locker(_mutex);
+				_expired = true;
+				_expired_cond.notify_one();
+			}
+			}).detach();
+	}</span>
+
+	void startOnce(int delay, std::function&lt;void()&gt; task)
+	{
+		std::thread([delay, task]() {
+			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+			task();
+			}).detach();
+	}
+
+	void stop()
+<span style = "background-color:#fdd">	{</span>
+		// do not stop again
+<span style = "background-color:#fdd">		if (_expired)
+			return;</span>
+
+<span style = "background-color:#fdd">		if (_try_to_expire)
+			return;</span>
+
+		// wait until timer 
+<span style = "background-color:#fdd">		_try_to_expire = true; // change this bool value to make timer while loop stop</span>
+		{
+<span style = "background-color:#fdd">			std::unique_lock&lt;std::mutex&gt; locker(_mutex);
+			_expired_cond.wait(locker, [this] {return _expired == true; });</span>
+
+			// reset the timer
+<span style = "background-color:#fdd">			if (_expired == true)
+				_try_to_expire = false;
+		}
+	}</span>
+
+private:
+	std::atomic&lt;bool&gt; _expired; // timer stopped status
+	std::atomic&lt;bool&gt; _try_to_expire; // timer is in stop process
+	std::mutex _mutex;
+	std::condition_variable _expired_cond;
+};</pre>
+	</body>
+</html>

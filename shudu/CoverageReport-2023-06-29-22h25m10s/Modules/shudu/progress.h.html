@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>progress.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+ï»¿// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+// Descriptionï¼Sudoku Game
+// Authorï¼GYM, SJQ
+// Date:2023-6
+// Modify Record:
+#pragma once
+#include &lt;ctime&gt;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include "timer.h"
+
+using namespace std::chrono;
+
+class ProgressBar {
+ protected:
+	// è¿åº¦æ¡çé¿åº¦ï¼ä¸åå«ååç¼ï¼
+	unsigned int ncols;
+	// å·²å®æçæ°é
+	std::atomic&lt;unsigned int&gt; finishedNum;
+	// ä¸æ¬¡çå·²å®ææ°é
+	unsigned int lastNum;
+	// æ»æ°
+	unsigned int totalNum;
+	// è¿åº¦æ¡é¿åº¦ä¸ç¾åæ¯ä¹é´çç³»æ°
+	double colsRatio;
+	// å¼å§æ¶é´
+	steady_clock::time_point beginTime;
+	// ä¸æ¬¡éç»çæ¶é´
+	steady_clock::time_point lastTime;
+	// éç»å¨æ
+	milliseconds interval;
+	Timer timer;
+
+ public:
+<span style = "background-color:#dfd">	ProgressBar(unsigned int totalNum, milliseconds interval) : totalNum(totalNum), interval(interval), finishedNum(0), lastNum(0), ncols(80), colsRatio(0.8) {}</span>
+	// å¼å§
+	void start();
+	// å®æ
+	void finish();
+	// æ´æ°
+<span style = "background-color:#dfd">	void update() { return this-&gt;update(1); }</span>
+	// ä¸æ¬¡æ´æ°å¤ä¸ªæ°é
+<span style = "background-color:#dfd">	void update(unsigned int num) { this-&gt;finishedNum += num; }</span>
+	// è·åè¿åº¦æ¡é¿åº¦
+	unsigned int getCols() { return this-&gt;ncols; }
+	// è®¾ç½®è¿åº¦æ¡é¿åº¦
+	void setCols(unsigned int ncols) { this-&gt;ncols = ncols; this-&gt;colsRatio = ncols / 100; }
+	// éç»
+	void show();
+<span style = "background-color:#dfd">};</span></pre>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>GenerateHandler.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+ï»¿// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+// Descriptionï¼Sudoku Game
+// Authorï¼GYM, SJQ
+// Date:2023-6
+// Modify Record:
+#pragma once
+#include &lt;math.h&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;random&gt;
+#include "timer.h"
+#include "SolveHandler.h"
+using namespace std;
+// using std::cout;
+// using std::endl;
+// å¨éè¦ä½¿ç¨stdå½åç©ºé´ä¸­çç¬¦å·æ¶ï¼ä½¿ç¨using-declarationéä¸ªå¼å¥
+
+
+class Generatehandler {
+ private:
+	string FinalPath = "final.txt";
+	string outputPath = "question.txt";
+	string absolatePath = "D:\\LessonProjects\\shudu\\shudu";
+	int FinalNum = 0;// ç»å±æ°ç®
+	int current_HoleNum = 0;// å½åæç©ºæ°
+	int current_selectFinal = 0;// å½åä½¿ç¨çæ£çç»å±
+	int matrix[100][9][9] = { 0 };// å¼è¾ä¸ä¸ªå¤§æ°ç»ï¼å­å¨æå¤100ä¸ªç»å±
+	int holeboard[9][9] = { 0 };// å½åæç©ºçæ£çä½ç½®
+
+ public:
+	bool generate(int num, int beginNum, int endNum, bool isUnion);
+	void holehole();// æåæåæ
+	void input(fstream&amp; f);
+	void output(fstream&amp; f, vector&lt;std::vector&lt;int&gt;&gt;&amp; board);
+	void SelectFinal();
+	int isNum(const string &amp;s);
+	// æ£æ¥å¨ç»å®ä½ç½® (row, col) æ¯å¦å¯ä»¥æ¾ç½®æ°å­ num
+	bool isValid(const vector&lt;std::vector&lt;int&gt;&gt;&amp; board, int row, int col, int num);
+	// ä½¿ç¨åæº¯ç®æ³çææ°ç¬æ¸¸æçå¯ä¸è§£
+	bool solveSudoku(vector&lt;std::vector&lt;int&gt;&gt;&amp; board);
+	// çææ°ç¬æ¸¸æé¢ç®
+	void generateSudoku(vector&lt;std::vector&lt;int&gt;&gt;&amp; board);
+	// çæå¨min-maxèå´é´çéæºæ°
+	int generateRandomNumber(int min, int max);
+	// è®¾ç½®ç»å¯¹è·¯å¾
+<span style = "background-color:#dfd">	void setAbsPath(string abs) {
+		absolatePath = abs;
+	}</span>
+};</pre>
+	</body>
+</html>
