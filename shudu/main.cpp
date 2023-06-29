@@ -6,7 +6,8 @@
 #include <iostream>
 #include <string>
 #include "InputHandler.h"
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main(int argc, char* argv[]) {
 	InputHandler ih;

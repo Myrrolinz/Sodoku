@@ -6,15 +6,18 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <string>
+#include <utility>
 #include "SolveHandler.h"
-using namespace std;
+// using namespace std;
+using std::cout;
+using std::endl;
 
 void SolverHandler::insert(int i, int j, int num) {
     matrix[i][j] = num;
     if (num == '$') {
         blank.push(make_pair(i, j));
-    }
-    else {
+    } else {
         row[i] |= (1 << num);
         col[j] |= (1 << num);
         patch[(i / 3) * 3 + j / 3] |= (1 << num);
@@ -24,7 +27,8 @@ void SolverHandler::insert(int i, int j, int num) {
 void SolverHandler::remove(int i, int j) {
     int num = matrix[i][j];
     if (num != '$') {
-        matrix[i][j] = (int)'$';
+        // matrix[i][j] = (int)'$';
+        matrix[i][j] = static_cast<int>('$');
         row[i] ^= (1 << num);
         col[j] ^= (1 << num);
         patch[(i / 3) * 3 + j / 3] ^= (1 << num);
@@ -36,8 +40,7 @@ void SolverHandler::replace(int i, int j, int newNum) {
     int oldNum = matrix[i][j];
     if (oldNum == '$') {
         insert(i, j, newNum);
-    }
-    else {
+    } else {
         matrix[i][j] = newNum;
         int mask = (1 << oldNum) | (1 << newNum);
         row[i] ^= mask;
@@ -55,8 +58,8 @@ int SolverHandler::getMask(int i, int j) {
 }
 
 void SolverHandler::clean() {
-    //清空数组
-    //清空row、col、patch
+    // 清空数组
+    // 清空row、col、patch
     for (int i = 0; i < 9; i++) {
         row[i] = 0;
         col[i] = 0;
@@ -69,9 +72,8 @@ void SolverHandler::clean() {
     while (!blank.empty()) {
         blank.pop();
     }
-
-
 }
+
 void SolverHandler::input(fstream& f) {
     string line;
     for (int i = 0; i < 9; i++) {
@@ -111,7 +113,7 @@ int SolverHandler::solve() {
     int mask = getMask(coord.first, coord.second);
     for (int i = 1; i <= 9; i++) {
         if ((mask & (1 << i)) == 0) {
-            //Not used, search down
+            // Not used, search down
             replace(coord.first, coord.second, i);
             int result = solve();
             if (result == 0) {
@@ -119,7 +121,7 @@ int SolverHandler::solve() {
             }
         }
     }
-    //coords pushed back here
+    // coords pushed back here
     remove(coord.first, coord.second);
     return -1;
 }
