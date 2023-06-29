@@ -3,7 +3,7 @@
 // Author：GYM, SJQ
 // Date:2023-6
 // Modify Record:
-#include"progress.h"
+#include "progress.h"
 
 void ProgressBar::start() {
 	// 记录开始时间，并初始化定时器
@@ -11,7 +11,6 @@ void ProgressBar::start() {
 	this->lastTime = this->beginTime;
 	// 定时器用于定时调用重绘函数
 	this->timer.start(static_cast<int>(this->interval.count()), std::bind(&ProgressBar::show, this));
-
 }
 
 // 重绘函数
@@ -37,39 +36,29 @@ void ProgressBar::show() {
 	int barWidth = static_cast<int>(present * this->colsRatio);
 	// 打印已完成和未完成进度条
 	std::cout << std::setw(barWidth) << std::setfill('=') << "=";
-	//std::cout << std::setw(this->ncols - barWidth) << std::setfill(' ') << "|";
 	std::cout << std::setw(static_cast<size_t>(this->ncols) - static_cast<size_t>(barWidth)) << std::setfill(' ') << "|";
 	// 打印速度
 	std::cout << std::setprecision(1) << std::fixed << rate << "op/s|";
 	// 之后的两部分内容分别为打印已过的时间和剩余时间
 	int timeFromStartCount = static_cast<int>(duration<double>(timeFromStart).count());
-
-
 	std::time_t tfs = timeFromStartCount;
 	tm tmfs;
 	gmtime_s(&tmfs, &tfs);
 	std::cout << std::put_time(&tmfs, "%X") << "|";
-
 	int timeLast;
 	if (rate != 0) {
 		// 剩余时间的估计是用这次的速度和未完成的数量进行估计
 		timeLast = static_cast<int>((this->totalNum - tmpFinished) / rate);
-	}
-	else {
+	} else {
 		timeLast = INT_MAX;
 	}
-
 	if ((this->totalNum - tmpFinished) == 0) {
 		timeLast = 0;
 	}
-
-
 	std::time_t tl = timeLast;
 	tm tml;
 	gmtime_s(&tml, &tl);
 	std::cout << std::put_time(&tml, "%X");
-
-
 	this->lastNum = tmpFinished;
 	this->lastTime = now;
 }

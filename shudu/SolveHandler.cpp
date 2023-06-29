@@ -9,9 +9,9 @@
 #include <string>
 #include <utility>
 #include "SolveHandler.h"
-// using namespace std;
-using std::cout;
-using std::endl;
+using namespace std;
+// using std::cout;
+// using std::endl;
 
 void SolverHandler::insert(int i, int j, int num) {
     matrix[i][j] = num;

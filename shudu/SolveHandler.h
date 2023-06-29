@@ -10,9 +10,9 @@
 #include<algorithm>
 #include<stack>
 #include <utility>
-// using namespace std;
-using std::cout;
-using std::endl;
+using namespace std;
+//using std::cout;
+//using std::endl;
 
 struct SolverHandler {
  public:

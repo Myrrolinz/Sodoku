@@ -12,9 +12,9 @@
 #include <random>
 #include "timer.h"
 #include "SolveHandler.h"
-// using namespace std;
-using std::cout;
-using std::endl;
+using namespace std;
+// using std::cout;
+// using std::endl;
 // 在需要使用std命名空间中的符号时，使用using-declaration逐个引入
 
 

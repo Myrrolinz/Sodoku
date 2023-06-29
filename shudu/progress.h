@@ -10,12 +10,10 @@
 #include <iomanip>
 #include "timer.h"
 
-
 using namespace std::chrono;
 
-class ProgressBar
-{
-protected:
+class ProgressBar {
+ protected:
 	// 进度条的长度（不包含前后缀）
 	unsigned int ncols;
 	// 已完成的数量
@@ -33,7 +31,8 @@ protected:
 	// 重绘周期
 	milliseconds interval;
 	Timer timer;
-public:
+
+ public:
 	ProgressBar(unsigned int totalNum, milliseconds interval) : totalNum(totalNum), interval(interval), finishedNum(0), lastNum(0), ncols(80), colsRatio(0.8) {}
 	// 开始
 	void start();
