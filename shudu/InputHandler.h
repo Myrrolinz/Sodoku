@@ -29,9 +29,9 @@ private:
 	string QuexPath = "question.txt";//´æ´¢Êı¶ÀÌâÄ¿
 	char type1 = 'y';
 	char type2 = 'y';
-	int num;
-	int range1;
-	int range2;
-	int level;
+	int num = 20;
+	int range1 = 20;
+	int range2 = 55;
+	int level = 1;
 };
 

@@ -129,9 +129,14 @@ bool Generatehandler::isValid(const std::vector<std::vector<int>>& board, int ro
 	int startCol = col - col % 3;
 	for (int i = 0; i < 3; ++i) {
 		for (int j = 0; j < 3; ++j) {
-			if (board[startRow + i][startCol + j] == num) {
+			size_t rowIndex = static_cast<size_t>(startRow) + i;
+			size_t colIndex = static_cast<size_t>(startCol) + j;
+			if (board[rowIndex][colIndex] == num) {
 				return false;
 			}
+			/*if (board[startRow + i][startCol + j] == num) {
+				return false;
+			}*/
 		}
 	}
 
@@ -162,7 +167,7 @@ bool Generatehandler::solveSudoku(std::vector<std::vector<int>>& board) {
 	return true;  // 完成数独
 }
 void Generatehandler::generateSudoku(std::vector<std::vector<int>>& board) {
-	std::srand(std::time(0));  // 设置随机数种子
+	std::srand(static_cast<unsigned int>(std::time(0)));  // 设置随机数种子
 
 	// 清空数独游戏
 	board.clear();
@@ -267,6 +272,6 @@ int Generatehandler::isNum(const string& s) {
 
 void Generatehandler::SelectFinal() {
 	//随机挑选一个终局
-	std::srand(std::time(0));  // 设置种子，确保每次运行生成的随机数序列不同
+	std::srand(static_cast<unsigned int>(std::time(0)));  // 设置种子，确保每次运行生成的随机数序列不同
 	current_selectFinal = generateRandomNumber(0, FinalNum);  // 生成1到100之间的随机数
 }
