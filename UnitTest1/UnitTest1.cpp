@@ -10,8 +10,9 @@ namespace UnitTest1
 	{
 	public:
 
-		int argc1, argc2, argc3;
-		char** argv1, ** argv2, ** argv3, ** argv4, ** argv5, ** argv6;
+		int argc1, argc2, argc3, argc4;
+		char** argv1, ** argv2, ** argv3, ** argv4, ** argv5, ** argv6, ** argv7;
+		string path = "D:\\LessonProjects\\shudu\\";
 		string path = "D:\\LessonProjects\\shudu\\";
 		UnitTest()
 		{
@@ -24,25 +25,23 @@ namespace UnitTest1
 			argv4 = new char* [4];//n u
 			argv5 = new char* [5];//n m
 			argv6 = new char* [5];//n r
+			argv7 = new char* [6];//n r u
 
-
-			for (int i = 0; i < 3; i++)
-			{
+			for (int i = 0; i < 3; i++) {
 				argv1[i] = new char[30];
 				argv2[i] = new char[30];
 				argv3[i] = new char[30];
-
 			}
-
-			for (int i = 0; i < 4; i++)
-			{
+			for (int i = 0; i < 4; i++) {
 				argv4[i] = new char[30];
 
 			}
-			for (int i = 0; i < 5; i++)
-			{
+			for (int i = 0; i < 5; i++) {
 				argv5[i] = new char[30];
 				argv6[i] = new char[30];
+			}
+			for (int i = 0; i < 6; i++) {
+				argv7[i] = new char[30];
 			}
 			strcpy_s(argv1[0], 30, "shudu.exe");
 			strcpy_s(argv1[1], 30, "-c");
@@ -72,6 +71,13 @@ namespace UnitTest1
 			strcpy_s(argv6[2], 30, "100");
 			strcpy_s(argv6[3], 30, "-r");
 			strcpy_s(argv6[4], 30, "20-30");
+
+			strcpy_s(argv7[0], 30, "shudu.exe");
+			strcpy_s(argv7[1], 30, "-n");
+			strcpy_s(argv7[2], 30, "100");
+			strcpy_s(argv7[3], 30, "-r");
+			strcpy_s(argv7[4], 30, "20-55");
+			strcpy_s(argv7[3], 30, "-u");
 		}
 
 		//测试InputHandler,参数为-c时
@@ -89,7 +95,7 @@ namespace UnitTest1
 		{
 			InputHandler inputs;
 			inputs.setAbsPath(path);
-			inputs.check(argc1, argv1);
+			inputs.check(argc1, argv2);
 			Assert::AreEqual(inputs.GetType1() == 's', true);
 			//Assert::AreEqual(abc, true);
 		}
@@ -123,7 +129,6 @@ namespace UnitTest1
 			inputs.setAbsPath(path);
 			inputs.check(argc1, argv1);
 			Assert::AreEqual(inputs.GetType1() == 'y', true);
-			//'n'代表没有类别，表示没有输入正确的参数-c和-s
 		}
 
 		//测试-c时输入的数量
@@ -156,7 +161,8 @@ namespace UnitTest1
 			Assert::AreEqual(inputs.GetNum() == 10, true);
 			Assert::AreEqual(inputs.GetType1() == 'n', true);
 			Assert::AreEqual(inputs.GetType2() == 'u', true);
-
+			bool a = inputs.generator.generate(inputs.GetNum(), 18, 64, true);
+			Assert::AreEqual(true, a);
 		}
 		//测试指定level
 		TEST_METHOD(TestMethod9)
@@ -168,12 +174,12 @@ namespace UnitTest1
 			Assert::AreEqual(inputs.GetType1() == 'n', true);
 			Assert::AreEqual(inputs.GetType2() == 'm', true);
 			Assert::AreEqual(inputs.GetLevel() == 3, true);
-
+			bool a = inputs.generator.generate(inputs.GetNum(), 33, 64, true);
+			Assert::AreEqual(true, a);
 		}
 		//测试指定挖空数量
 		TEST_METHOD(TestMethod10)
 		{
-
 			InputHandler inputs;
 			inputs.setAbsPath(path);
 			inputs.check(argc3, argv6);
@@ -182,6 +188,8 @@ namespace UnitTest1
 			Assert::AreEqual(inputs.GetType2() == 'r', true);
 			Assert::AreEqual(inputs.GetRange1() == 20, true);
 			Assert::AreEqual(inputs.GetRange2() == 30, true);
+			bool a = inputs.generator.generate(inputs.GetNum(), inputs.GetRange1(), inputs.GetRange2(), true);
+			Assert::AreEqual(true, a);
 		}
 
 		//测试该数独可以解
@@ -202,7 +210,7 @@ namespace UnitTest1
 
 			Assert::AreEqual(handler.solveSudoku(board), true); // 该数独游戏可以解
 		}
-
+		
 		TEST_METHOD(TestMethod12)
 		{
 			Generatehandler handler;
@@ -219,7 +227,7 @@ namespace UnitTest1
 			// 检查是否有解
 			Assert::AreEqual(handler.solveSudoku(board), true);
 		}
-
+		//测试能否放置数字
 		TEST_METHOD(TestMethod13)
 		{
 			Generatehandler handler;
@@ -242,18 +250,45 @@ namespace UnitTest1
 		{
 			InputHandler inputs;
 			inputs.setAbsPath(path);
-			bool abc = inputs.generator.generate(1, 20, 30, false);
-			Assert::AreEqual(abc, true);
+			inputs.check(argc4, argv7);
+			Assert::AreEqual(inputs.GetNum() == 100, true);
+			Assert::AreEqual(inputs.GetType1() == 'n', true);
+			Assert::AreEqual(inputs.GetType2() == 'r', true);
+			Assert::AreEqual(inputs.GetType3() == 'u', true);
+			assert(inputs.GetRange1() == 20, true);
+			assert(inputs.GetRange2() == 55, true);
+			bool a = inputs.generator.generate(inputs.GetNum(), inputs.GetType1(), inputs.GetType2(), true);
+			Assert::AreEqual(true, a);
+
 		}
 		TEST_METHOD(TestMethod15)
 		{
+			strcpy_s(argv7[0], 30, "shudu.exe");
+			strcpy_s(argv7[1], 30, "-u");
+			strcpy_s(argv7[2], 30, "-n");
+			strcpy_s(argv7[3], 30, "100");
+			strcpy_s(argv7[4], 30, "-m");
+			strcpy_s(argv7[3], 30, "1");
 			InputHandler inputs;
 			inputs.setAbsPath(path);
-			bool abc = inputs.generator.generate(1, 20, 30, false);
-			Assert::AreEqual(abc, true);
+			inputs.check(argc4, argv7);
+			Assert::AreEqual(inputs.GetNum() == 100, true);
+			Assert::AreEqual(inputs.GetType1() == 'n', true);
+			Assert::AreEqual(inputs.GetType2() == 'u', true);
+			Assert::AreEqual(inputs.GetType3() == 'm', true);
+			assert(inputs.GetRange1() == 20, true);
+			assert(inputs.GetRange2() == 55, true);
+			bool a = inputs.generator.generate(inputs.GetNum(), inputs.GetType1(), inputs.GetType2(), true);
+			Assert::AreEqual(true, a);
 		}
 		TEST_METHOD(TestMethod16)
 		{
+			strcpy_s(argv7[0], 30, "shudu.exe");
+			strcpy_s(argv7[1], 30, "-n");
+			strcpy_s(argv7[2], 30, "100");
+			strcpy_s(argv7[3], 30, "-r");
+			strcpy_s(argv7[4], 30, "20-55");
+			strcpy_s(argv7[3], 30, "-u");
 			InputHandler inputs;
 			inputs.setAbsPath(path);
 			bool abc = inputs.generator.generate(1, 20, 30, false);

@@ -198,7 +198,7 @@ using namespace std;
 		}
 <span style = "background-color:#fdd">	} else if (argc == 6) {</span>
 		//é¦åéè¦ç¡®å®-uçä½ç½®
-<span style = "background-color:#fdd">		int upos = 1;
+<span style = "background-color:#dfd">		int upos = 1;
 		bool isUnion = false;
 		string arg1, param1, arg2, param2;
 		for (int i =0; i &lt; 6; i++) {
@@ -207,22 +207,22 @@ using namespace std;
 				upos = i;
 				isUnion = true;</span>
 			}
-<span style = "background-color:#fdd">		}
-		if (!isUnion) {
-			cout &lt;&lt; "è¾å¥å½ä»¤è¡æ ¼å¼éè¯¯ï¼åºç°åæ°ä¸ªåæ°ä½æªåºç°[-u]ï¼è¯·éæ°è¾å¥!" &lt;&lt; endl;
+<span style = "background-color:#dfd">		}
+		if (!isUnion) {</span>
+<span style = "background-color:#fdd">			cout &lt;&lt; "è¾å¥å½ä»¤è¡æ ¼å¼éè¯¯ï¼åºç°åæ°ä¸ªåæ°ä½æªåºç°[-u]ï¼è¯·éæ°è¾å¥!" &lt;&lt; endl;
 			return;</span>
 		}
-<span style = "background-color:#fdd">		if (upos == 1) {
-			arg1 = argv[2];
+<span style = "background-color:#dfd">		if (upos == 1) {</span>
+<span style = "background-color:#fdd">			arg1 = argv[2];
 			param1 = argv[3];
 			arg2 = argv[4];
-			param2 = argv[5];
-		} else if (upos == 3) {
+			param2 = argv[5];</span>
+<span style = "background-color:#dfd">		} else if (upos == 3) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[4];
-			param2 = argv[5];
-		} else if (upos == 5) {
+			param2 = argv[5];</span>
+<span style = "background-color:#fdd">		} else if (upos == 5) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[3];
@@ -231,24 +231,24 @@ using namespace std;
 			cout &lt;&lt; "è¾å¥å½ä»¤è¡æ ¼å¼éè¯¯ï¼è¯·éæ°è¾å¥!" &lt;&lt; endl;
 			return;</span>
 		}
-<span style = "background-color:#fdd">		if (arg1 == "-n" || arg2 == "-n") {
-			if (arg2 == "-n") {//è°æ´åæ°é¡ºåº
-				string temp_argv = arg1;
+<span style = "background-color:#dfd">		if (arg1 == "-n" || arg2 == "-n") {
+			if (arg2 == "-n") {//è°æ´åæ°é¡ºåº</span>
+<span style = "background-color:#fdd">				string temp_argv = arg1;
 				string temp_param = param1;
 				arg1 = arg2;
 				param1 = param2;
 				arg2 = temp_argv;
 				param2 = temp_param;
-			}
-			int n = isNum(param1);
+			}</span>
+<span style = "background-color:#dfd">			int n = isNum(param1);
 			type1 = 'n';
 			num = n;
-			if (n &lt;= 0 || n &gt; 1000000) {
-				cout &lt;&lt; "çææ°ç¬é¢åºæ°éä¸è§è(0&lt;n&lt;1000000)!è¯·éæ°è¾å¥çææ°" &lt;&lt; endl;
+			if (n &lt;= 0 || n &gt; 1000000) {</span>
+<span style = "background-color:#fdd">				cout &lt;&lt; "çææ°ç¬é¢åºæ°éä¸è§è(0&lt;n&lt;1000000)!è¯·éæ°è¾å¥çææ°" &lt;&lt; endl;
 				return;</span>
 			}
-<span style = "background-color:#fdd">			if (arg2 == "-r") {
-				type2 = 'r';
+<span style = "background-color:#dfd">			if (arg2 == "-r") {</span>
+<span style = "background-color:#fdd">				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;</span>
 				// å°èå´"a-b"è½¬ä¸ºï¼a  b
@@ -297,8 +297,8 @@ using namespace std;
 					cout &lt;&lt; "è¾å¥çé¾åº¦ä¸ç¬¦åè§èï¼åºä¸º1-3ä¹é´çæ´æ°!" &lt;&lt; endl;
 					return;</span>
 				}
-<span style = "background-color:#fdd">			} else {
-				cout &lt;&lt; "è¾å¥æè¯¯!å­å¨æªå®ä¹çéé¡¹" &lt;&lt; endl;
+<span style = "background-color:#fdd">			} else {</span>
+<span style = "background-color:#dfd">				cout &lt;&lt; "è¾å¥æè¯¯!å­å¨æªå®ä¹çéé¡¹" &lt;&lt; endl;
 				return;</span>
 			}
 <span style = "background-color:#fdd">		} else {
@@ -306,24 +306,24 @@ using namespace std;
 			return;</span>
 		}
 		
-<span style = "background-color:#fdd">	} else {</span>
-<span style = "background-color:#dfd">	cout &lt;&lt; "è¾å¥æè¯¯!" &lt;&lt; endl;</span>
+<span style = "background-color:#fdd">	} else {
+	cout &lt;&lt; "è¾å¥æè¯¯!" &lt;&lt; endl;</span>
 	}
 	return;
 <span style = "background-color:#dfd">}</span>
 
-<span style = "background-color:#fdd">int InputHandler::isNum(const string&amp; s) {
+<span style = "background-color:#dfd">int InputHandler::isNum(const string&amp; s) {
 	size_t size = s.size();
-	if (size &gt; 7)
-		return -1;
-	for (size_t i = 0; i &lt; size; i++) {
+	if (size &gt; 7)</span>
+<span style = "background-color:#fdd">		return -1;</span>
+<span style = "background-color:#dfd">	for (size_t i = 0; i &lt; size; i++) {
 		int ascii = int(s[i]);
 		if (ascii &gt;= 48 &amp;&amp; ascii &lt;= 57)
 			continue;</span>
 		else 
 <span style = "background-color:#fdd">			return -1;
-	}
-	return stoi(s);
+	}</span>
+<span style = "background-color:#dfd">	return stoi(s);
 }</span>
 
 <span style = "background-color:#fdd">void InputHandler::getFinal(int num) {
@@ -364,15 +364,15 @@ using namespace std;
 <span style = "background-color:#fdd">	}
 }</span>
 
-<span style = "background-color:#fdd">int InputHandler::GetNum() {
+<span style = "background-color:#dfd">int InputHandler::GetNum() {
 	return num;
 }</span>
 
-<span style = "background-color:#fdd">char InputHandler::GetType1() {
+<span style = "background-color:#dfd">char InputHandler::GetType1() {
 	return type1;
 }</span>
 
-<span style = "background-color:#fdd">char InputHandler::GetType2() {
+<span style = "background-color:#dfd">char InputHandler::GetType2() {
 	return type2;
 }</span>
 

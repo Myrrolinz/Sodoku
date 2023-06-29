@@ -238,6 +238,7 @@ void InputHandler::check(int argc, char** argv) {
 			}
 			if (arg2 == "-r") {
 				type2 = 'r';
+				type3 = 'm';
 				string begin, end;
 				bool isBegin = true;
 				// 将范围"a-b"转为：a  b
@@ -274,6 +275,7 @@ void InputHandler::check(int argc, char** argv) {
 				//  第三档：挖空在33-64之间
 				 
 				type2 = 'm';
+				type3 = 'r';
 				level = isNum(param2);
 				if (level == 1) {
 					generator.generate(n, 5, 17,true);
@@ -363,6 +365,10 @@ char InputHandler::GetType1() {
 
 char InputHandler::GetType2() {
 	return type2;
+}
+
+char InputHandler::GetType3() {
+	return type3;
 }
 
 int InputHandler::GetRange1() {

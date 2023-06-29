@@ -23,6 +23,7 @@ class InputHandler {
 	int GetNum();
 	char GetType1();
 	char GetType2();
+	char GetType3();
 	int GetRange1();
 	int GetRange2();
 	int GetLevel();
@@ -35,6 +36,7 @@ class InputHandler {
 	string QuexPath = "question.txt";// 存储数独题目
 	char type1 = 'y';
 	char type2 = 'y';
+	char type3 = 'y';
 	int num = 20;
 	int range1 = 20;
 	int range2 = 55;

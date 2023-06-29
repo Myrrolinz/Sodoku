@@ -13,7 +13,6 @@ using namespace std;
 // using std::endl;
 // 在需要使用std命名空间中的符号时，使用using-declaration逐个引入
 
-
 bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {
 	/*思路：从beginNum开始挖空，
 	如果需要判断union：
@@ -61,11 +60,6 @@ bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			generateSudoku(board);
 			holehole();
-			// for (int row = 0; row < 9; row++) {
-			//	 for (int col = 0; col < 9; col++) {
-
-			//	 }
-			// }
 			output(outfile, board);
 		}
 		outfile.close();
@@ -144,7 +138,6 @@ bool Generatehandler::solveSudoku(std::vector<std::vector<int>>& board) {
 				for (int num = 1; num <= 9; ++num) {  // 尝试数字 1 到 9
 					if (isValid(board, row, col, num)) {
 						board[row][col] = num;  // 放置数字
-
 						if (solveSudoku(board)) {
 							return true;  // 找到解
 						}
@@ -155,24 +148,19 @@ bool Generatehandler::solveSudoku(std::vector<std::vector<int>>& board) {
 			}
 		}
 	}
-
 	return true;  // 完成数独
 }
 void Generatehandler::generateSudoku(std::vector<std::vector<int>>& board) {
 	std::srand(static_cast<unsigned int>(std::time(0)));  // 设置随机数种子
-
 	// 清空数独游戏
 	board.clear();
 	board.resize(9, std::vector<int>(9, 0));
-
 	// 随机填充第一行
 	for (int col = 0; col < 9; ++col) {
 		board[0][col] = col + 1;
 	}
-
 	// 混洗第一行的数字
 	std::random_shuffle(board[0].begin(), board[0].end());
-
 	// 生成唯一解的数独游戏
 	solveSudoku(board);
 }

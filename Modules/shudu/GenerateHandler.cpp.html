@@ -24,7 +24,6 @@ using namespace std;
 // using std::endl;
 // å¨éè¦ä½¿ç¨stdå½åç©ºé´ä¸­çç¬¦å·æ¶ï¼ä½¿ç¨using-declarationéä¸ªå¼å¥
 
-
 <span style = "background-color:#fdd">bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) {</span>
 	/*æè·¯ï¼ä»beginNumå¼å§æç©ºï¼
 	å¦æéè¦å¤æ­unionï¼
@@ -71,13 +70,8 @@ using namespace std;
 		for (int t = 0; t &lt; num; t++) { // å¨èå´åéæºçææç©ºä¸ªæ°
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			generateSudoku(board);
-			holehole();</span>
-			// for (int row = 0; row &lt; 9; row++) {
-			//	 for (int col = 0; col &lt; 9; col++) {
-
-			//	 }
-			// }
-<span style = "background-color:#fdd">			output(outfile, board);
+			holehole();
+			output(outfile, board);
 		}
 		outfile.close();
 	}
@@ -154,9 +148,8 @@ bool Generatehandler::isValid(const std::vector&lt;std::vector&lt;int&gt;&gt;&am
 			if (board[row][col] == 0) {  // å½åä½ç½®ä¸ºç©º
 				for (int num = 1; num &lt;= 9; ++num) {  // å°è¯æ°å­ 1 å° 9
 					if (isValid(board, row, col, num)) {
-						board[row][col] = num;  // æ¾ç½®æ°å­</span>
-
-<span style = "background-color:#fdd">						if (solveSudoku(board)) {
+						board[row][col] = num;  // æ¾ç½®æ°å­
+						if (solveSudoku(board)) {
 							return true;  // æ¾å°è§£</span>
 						}
 <span style = "background-color:#fdd">						board[row][col] = 0;  // åæº¯ï¼éç½®ä¸ºç©º</span>
@@ -165,25 +158,20 @@ bool Generatehandler::isValid(const std::vector&lt;std::vector&lt;int&gt;&gt;&am
 				return false;  // æ è§£</span>
 			}
 <span style = "background-color:#fdd">		}
-	}</span>
-
-<span style = "background-color:#fdd">	return true;  // å®ææ°ç¬
+	}
+	return true;  // å®ææ°ç¬
 }
 void Generatehandler::generateSudoku(std::vector&lt;std::vector&lt;int&gt;&gt;&amp; board) {
 	std::srand(static_cast&lt;unsigned int&gt;(std::time(0)));  // è®¾ç½®éæºæ°ç§å­</span>
-
 	// æ¸ç©ºæ°ç¬æ¸¸æ
 <span style = "background-color:#fdd">	board.clear();
 	board.resize(9, std::vector&lt;int&gt;(9, 0));</span>
-
 	// éæºå¡«åç¬¬ä¸è¡
 <span style = "background-color:#fdd">	for (int col = 0; col &lt; 9; ++col) {
 		board[0][col] = col + 1;
 	}</span>
-
 	// æ··æ´ç¬¬ä¸è¡çæ°å­
 <span style = "background-color:#fdd">	std::random_shuffle(board[0].begin(), board[0].end());</span>
-
 	// çæå¯ä¸è§£çæ°ç¬æ¸¸æ
 <span style = "background-color:#fdd">	solveSudoku(board);
 }</span>

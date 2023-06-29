@@ -16,19 +16,101 @@
 // Modify Record:
 #include &lt;iostream&gt;
 #include &lt;string&gt;
+#include &lt;assert.h&gt;
 #include "InputHandler.h"
 //using std::cout;
 //using std::endl;
 using namespace std;
 
+<span style = "background-color:#dfd">void UnitTest() {</span>
+	int argc1, argc2, argc3, argc4;
+	char** argv1, ** argv2, ** argv3, ** argv4, ** argv5, ** argv6, ** argv7;
+<span style = "background-color:#dfd">	string path = "D:\\LessonProjects\\shudu\\";</span>
+
+<span style = "background-color:#dfd">	argc1 = 3;
+	argc2 = 4;
+	argc3 = 5;
+	argc4 = 6;
+	argv1 = new char* [3];//c
+	argv2 = new char* [3];//s
+	argv3 = new char* [3];//n
+	argv4 = new char* [4];//n u
+	argv5 = new char* [5];//n m
+	argv6 = new char* [5];//n r
+	argv7 = new char* [6];//n r u</span>
+
+<span style = "background-color:#dfd">	for (int i = 0; i &lt; 3; i++) {
+		argv1[i] = new char[30];
+		argv2[i] = new char[30];
+		argv3[i] = new char[30];
+	}
+	for (int i = 0; i &lt; 4; i++) {
+		argv4[i] = new char[30];</span>
+
+<span style = "background-color:#dfd">	}
+	for (int i = 0; i &lt; 5; i++) {
+		argv5[i] = new char[30];
+		argv6[i] = new char[30];
+	}
+	for (int i = 0; i &lt; 6; i++) {
+		argv7[i] = new char[30];
+	}</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv1[0], 30, "shudu.exe");
+	strcpy_s(argv1[1], 30, "-c");
+	strcpy_s(argv1[2], 30, "100");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv2[0], 30, "shudu.exe");
+	strcpy_s(argv2[1], 30, "-s");
+	strcpy_s(argv2[2], 30, "question.txt");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv3[0], 30, "shudu.exe");
+	strcpy_s(argv3[1], 30, "-n");
+	strcpy_s(argv3[2], 30, "100");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv4[0], 30, "shudu.exe");
+	strcpy_s(argv4[1], 30, "-n");
+	strcpy_s(argv4[2], 30, "10");
+	strcpy_s(argv4[3], 30, "-u");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv5[0], 30, "shudu.exe");
+	strcpy_s(argv5[1], 30, "-n");
+	strcpy_s(argv5[2], 30, "100");
+	strcpy_s(argv5[3], 30, "-m");
+	strcpy_s(argv5[4], 30, "3");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv6[0], 30, "shudu.exe");
+	strcpy_s(argv6[1], 30, "-n");
+	strcpy_s(argv6[2], 30, "100");
+	strcpy_s(argv6[3], 30, "-r");
+	strcpy_s(argv6[4], 30, "20-55");</span>
+
+<span style = "background-color:#dfd">	strcpy_s(argv7[0], 30, "shudu.exe");
+	strcpy_s(argv7[1], 30, "-n");
+	strcpy_s(argv7[2], 30, "100");
+	strcpy_s(argv7[3], 30, "-r");
+	strcpy_s(argv7[4], 30, "20-55");
+	strcpy_s(argv7[3], 30, "-u");</span>
+
+<span style = "background-color:#dfd">	InputHandler inputs;
+	inputs.setAbsPath(path);
+	inputs.check(argc4, argv7);
+	assert(inputs.GetNum() == 100, true);
+	assert(inputs.GetType1() == 'n', true);
+	assert(inputs.GetType2() == 'u', true);</span>
+<span style = "background-color:#fdd">	assert(inputs.GetRange1() == 20, true);
+	assert(inputs.GetRange2() == 55, true);</span>
+<span style = "background-color:#dfd">}</span>
+
 <span style = "background-color:#dfd">int main(int argc, char* argv[]) {
 	InputHandler ih;
 	cout &lt;&lt; "è¯·è¾å¥å­å¨æä»¶çç»å¯¹è·¯å¾:" &lt;&lt; endl;
 	string abs;
-	cin &gt;&gt; abs;
-	ih.setAbsPath(abs);
-	ih.check(argc, argv);
-	return 0;
+	cin &gt;&gt; abs;</span>
+	//ih.setAbsPath(abs);
+	//ih.check(argc, argv);
+<span style = "background-color:#dfd">	UnitTest();</span>
+<span style = "background-color:#fdd">	return 0;
 }</span></pre>
 	</body>
 </html>
