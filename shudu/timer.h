@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/*
+** (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+** Description：Sudoku Game
+** Author：GYM, SJQ
+** Date:2023-6
+** Modify Record:
+*/
+#pragma once
 #include <functional>
 #include <chrono>
 #include <thread>

@@ -1,4 +1,11 @@
-﻿#include"progress.h"
+﻿/*
+** (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+** Description：Sudoku Game
+** Author：GYM, SJQ
+** Date:2023-6
+** Modify Record:
+*/
+#include"progress.h"
 
 void ProgressBar::start() {
 	// 记录开始时间，并初始化定时器

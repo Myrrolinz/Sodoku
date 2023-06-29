@@ -1,4 +1,11 @@
-﻿#include <iostream>
+﻿/*
+** (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+** Description：Sudoku Game
+** Author：GYM, SJQ
+** Date:2023-6
+** Modify Record:
+*/
+#include <iostream>
 #include <string>
 #include "InputHandler.h"
 using namespace std;
