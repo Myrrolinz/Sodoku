@@ -1,4 +1,4 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include "InputHandler.h"
 #include <fstream>
 #include "progress.h"
@@ -19,11 +19,11 @@ inline void output(fstream& f, int* line, int* offset) {
 }
 
 void InputHandler::check(int argc, char** argv) {
-	/*Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:
-	-c num:ï¿½ï¿½ï¿½ï¿½numï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	-s game.txt:ï¿½ï¿½game.txtï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ð£¬´æ´¢ï¿½ï¿½shudu.txtï¿½ï¿½
-	-n num:ï¿½ï¿½ï¿½ï¿½numï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½game.txtï¿½ï¿½
-	-r ï¿½Ú¿Õ£ï¿½a-b
+	/*Ö»ÓÐÒ»¸ö²ÎÊý:
+	-c num:Éú³Énum¸öÖÕÅÌ
+	-s game.txt:´Ógame.txt¶ÁÈ¡Èô¸ÉÊý¶ÀÓÎÏ·£¬²¢¸ø³ö½â´ð£¬´æ´¢µ½shudu.txtÖÐ
+	-n num:Éú³Énum¸öÊý¶ÀÓÎÏ·£¬´æ´¢µ½game.txtÖÐ
+	-r ÍÚ¿Õ£ºa-b
 	*/
 	generator.setAbsPath(absolatePath);
 	if (argc == 3) {
@@ -32,22 +32,25 @@ void InputHandler::check(int argc, char** argv) {
 		if (parameter1 == "-c") {//done
 			int n = isNum(parameter2);
 			if (n <= 0 || n > 1000000)
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0<n<=1000000!" << endl;
+				cout << "²»Âú×ã0<n<=1000000!" << endl;
 			else {
 				// FianlMaker fm;
 				// fm.make(n);
+				type1 = 'c';
+				num = n;
 				getFinal(n);
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << parameter2 << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
+				cout << "ÒÑÉú³É" << parameter2 << "¸öÊý¶ÀÖÕÅÌ" << endl;
 			}
 		}
 		else if (parameter1 == "-s") {
 			fstream infile(absolatePath+parameter2, ios::in);
 			fstream outfile(absolatePath + AnsPath, ios::out);
+			type1 = 's';
 			if (!infile.is_open()) {
-				cout << "ï¿½Ä¼ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!" << endl;
+				cout << "ÎÄ¼þ´ò¿ªÊ§°Ü! " << endl;
 				return;
 			}
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½Ôºï¿½..." << endl;
+			cout << "ÕýÔÚÇó½â, ÇëÉÔºò..." << endl;
 			int i = 1;
 			while (infile.peek() != EOF) {
 				board.input(infile);
@@ -56,15 +59,25 @@ void InputHandler::check(int argc, char** argv) {
 					board.output(outfile);
 				}
 				else {
-					cout << "ï¿½ï¿½" << i << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ½ï¿½!" << endl;
+					cout << "µÚ" << i << "¸öÊý¶ÀÎÞ½â!" << endl;
 					outfile << "No solution" << endl << endl;
 				}
 				i++;
 				board.clean();
 			}
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+			cout << "Íê³ÉÇó½â!" << endl;
 			infile.close();
 			outfile.close();
+		}
+		else if (parameter1 == "-n") {
+			int n = isNum(parameter2);
+			if (n <= 0 || n > 1000)
+				cout << "²»Âú×ã0<n<=1000000!" << endl;
+			else {
+				generator.generate(n, 18, 64, false);
+				cout << "ç”Ÿæˆç»“æŸï¼?" << endl;
+				return;
+			}
 		}
 		else {
 			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
@@ -76,18 +89,28 @@ void InputHandler::check(int argc, char** argv) {
 		string arg3 = argv[3];
 		string parm1;
 		if (arg2 == "-n" || arg1 == "-u") {
+			if (arg2 == "-n")
+				type2 = 'n';
+			if (arg1 == "-u")
+				type1 = 'u';
 			parm1 = arg3;
 		}
 		else if (arg1 == "-n" || arg3 == "-u") {
+			if (arg1 == "-n")
+				type1 = 'n';
+			if (arg3 == "-u")
+				type2 = 'u';
 			parm1 = arg2;
 		}
 		else {
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?!" << endl;
 			return;
 		}
 		int n = isNum(parm1);
 		if (n <= 0 || n > 1000000) {
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶(0<n<1000000)!ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
+			num = n;
+			cout << "Éú³ÉÊý¶ÀÌâ¿âÊýÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØÐÂÊäÈëÉú³ÉÊý" << endl;
+			//cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·?(0<n<1000000)!ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
 			return;
 		}
 		generator.generate(n, 18, 64, true);
@@ -97,14 +120,16 @@ void InputHandler::check(int argc, char** argv) {
 		string parm1 = argv[2];
 		string arg2 = argv[3];
 		string param2 = argv[4];
-		
 		if (arg1 == "-n") {
 			int n = isNum(parm1);
+			num = n;
+			type1 = 'n';
 			if (n <= 0 || n > 1000000) {
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶(0<n<1000000)!ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
+				cout << "Éú³ÉÊý¶ÀÌâ¿âÊýÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØÐÂÊäÈëÉú³ÉÊý" << endl;
 				return;
 			}
 			if (arg2 == "-r") {
+				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;
 				//ï¿½ï¿½ï¿½ï¿½Î§"a-b"×ªÎªï¿½ï¿½a  b
@@ -122,59 +147,61 @@ void InputHandler::check(int argc, char** argv) {
 					}
 				}
 				if (begin.length() == 0 || end.length() == 0) {
-					cout << "[-r]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½a-bï¿½ï¿½Ê½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "[-r]Ïî²ÎÊý²»¹æ·¶£¬Ó¦ÊäÈëa-bÐÎÊ½µÄ²ÎÊý£¬ÇëÖØÐÂÊäÈë!" << endl;
 					return;
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
+				range1 = begin_num;
+				range2 = end_num;
 				if (begin_num <= 0 || end_num <= 0|| begin_num > end_num) {
-					cout << "[-r]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½a-bï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "[-r]Ïî²ÎÊý²»¹æ·¶£¬Ó¦ÊäÈëa-bÐÎÊ½µÄÕýÕûÊý£¬ÇëÖØÐÂÊäÈë!" << endl;
 					return;
 				}
 				else {
 					generator.generate(n, begin_num, end_num,false);
-					cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << parm1 << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Ú¿Õ·ï¿½Î§ï¿½ï¿½["<<begin_num<<", "<<end_num<<"]Ö®ï¿½ï¿½" << endl;
+					cout << "ÒÑÉú³É" << parm1 << "¸öÊý¶ÀÓÎÏ·£¬ÍÚ¿Õ·¶Î§ÔÚ["<<begin_num<<", "<<end_num<<"]Ö®¼ä" << endl;
 				}
 			}
 			else if (arg2 == "-m") {
-				//Ñ¡ï¿½ï¿½ï¿½Ñ¶Èµï¿½Ê±ï¿½ò£¬·ï¿½Îª3ï¿½ï¿½
-				/*ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½5-18Ö®ï¿½ï¿½(ï¿½ï¿½Ë²ï¿½ï¿½ï¿½Òªï¿½ï¿½Î¨Ò»ï¿½ï¿½)
-				  ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½18-32Ö®ï¿½ï¿½
-				  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½33-64Ö®ï¿½ï¿½
+				//Ñ¡ÔñÄÑ¶ÈµÄÊ±ºò£¬·ÖÎª3µµ
+				/*µÚÒ»µµ£ºÍÚ¿ÕÔÚ5-18Ö®¼ä(Òò´Ë²»ÄÜÒªÇóÎ¨Ò»½â)
+				  µÚ¶þµµ£ºÍÚ¿ÕÔÚ18-32Ö®¼ä
+				  µÚÈýµµ£ºÍÚ¿ÕÔÚ33-64Ö®¼ä
 				  */
-				int level = isNum(param2);
-				
+				level = isNum(param2);
+				type2 = 'm';
 				if (level == 1) {
 					cout << "level:" << level << endl;
 					generator.generate(n, 18, 32,false);
-					cout << "ç”Ÿæˆç»“æŸï¼" << endl;
+					cout << "ç”Ÿæˆç»“æŸï¼?" << endl;
 					return;
 				}
 				else if(level==2)
 				{
 					generator.generate(n, 32, 48,false);
-					cout << "ç”Ÿæˆç»“æŸï¼" << endl;
+					cout << "ç”Ÿæˆç»“æŸï¼?" << endl;
 					return;
 				}
 				else if (level == 3) {
 					generator.generate(n, 48, 64,false);
-					cout << "ç”Ÿæˆç»“æŸï¼" << endl;
+					cout << "ç”Ÿæˆç»“æŸï¼?" << endl;
 					return;
 				}
 				else {
-					cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¶È²ï¿½ï¿½ï¿½ï¿½Ï¹æ·¶ï¿½ï¿½Ó¦Îª1-3Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "ÊäÈëµÄÄÑ¶È²»·ûºÏ¹æ·¶£¬Ó¦Îª1-3Ö®¼äµÄÕûÊý!" << endl;
 					return;
 				}
 				
 			}
 			else {
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½" << endl;
+				cout << "ÊäÈëÓÐÎó!´æÔÚÎ´¶¨ÒåµÄÑ¡Ïî" << endl;
 				return;
 			}
 		}
 	}
 	else if (argc == 6) {
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ·ï¿½ï¿½-uï¿½ï¿½Î»ï¿½ï¿½
+		//Ê×ÏÈÐèÒªÈ·¶¨-uµÄÎ»ÖÃ
 		int upos = 1;
 		bool isUnion = false;
 		string arg1, param1, arg2, param2;
@@ -186,7 +213,7 @@ void InputHandler::check(int argc, char** argv) {
 			}
 		}
 		if (!isUnion) {
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½Ê½ï¿½ï¿½ï¿½ó£¬³ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½[-u]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+			cout << "ÊäÈëÃüÁîÐÐ¸ñÊ½´íÎó£¬³öÏÖµ¥Êý¸ö²ÎÊýµ«Î´³öÏÖ[-u]£¬ÇëÖØÐÂÊäÈë!" << endl;
 			return;
 		}
 		if (upos == 1) {
@@ -208,11 +235,11 @@ void InputHandler::check(int argc, char** argv) {
 			param2 = argv[4];
 		}
 		else {
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+			cout << "ÊäÈëÃüÁîÐÐ¸ñÊ½´íÎó£¬ÇëÖØÐÂÊäÈë!" << endl;
 			return;
 		}
 		if (arg1 == "-n" || arg2 == "-n") {
-			if (arg2 == "-n") {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½
+			if (arg2 == "-n") {//µ÷Õû²ÎÊýË³Ðò
 				string temp_argv = arg1;
 				string temp_param = param1;
 				arg1 = arg2;
@@ -221,19 +248,22 @@ void InputHandler::check(int argc, char** argv) {
 				param2 = temp_param;
 			}
 			int n = isNum(param1);
+			type1 = 'n';
+			num = n;
 			/*cout << "arg1" << arg1 << endl;
 			cout << "param1:" << param1 << endl;
 			cout << "arg2" << arg2 << endl;
 			cout << "param2:" << param2 << endl;
 			cout << n << endl;*/
 			if (n <= 0 || n > 1000000) {
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶(0<n<1000000)!ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
+				cout << "Éú³ÉÊý¶ÀÌâ¿âÊýÁ¿²»¹æ·¶(0<n<1000000)!ÇëÖØÐÂÊäÈëÉú³ÉÊý" << endl;
 				return;
 			}
 			if (arg2 == "-r") {
+				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;
-				//ï¿½ï¿½ï¿½ï¿½Î§"a-b"×ªÎªï¿½ï¿½a  b
+				//½«·¶Î§"a-b"×ªÎª£ºa  b
 				for (int i = 0; i < param2.length(); i++) {
 					if (param2[i] == '-') {
 						isBegin = false;
@@ -248,28 +278,30 @@ void InputHandler::check(int argc, char** argv) {
 					}
 				}
 				if (begin.length() == 0 || end.length() == 0) {
-					cout << "[-r]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¶ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½a-bï¿½ï¿½Ê½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "[-r]Ïî²ÎÊý²»¹æ·¶£¬Ó¦ÊäÈëa-bÐÎÊ½µÄ²ÎÊý£¬ÇëÖØÐÂÊäÈë!" << endl;
 					return;
 				}
 				int begin_num = isNum(begin);
 				int end_num = isNum(end);
-				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num>64) {
-					cout << "ï¿½ï¿½ï¿½ï¿½-rï¿½î²»ï¿½æ·¶ï¿½ï¿½ï¿½â£ºï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½1.ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2.ï¿½Ã·ï¿½Î§ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½(ï¿½ë½«ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½18-64)" << endl;
+				range1 = begin_num;
+				range2 = end_num;
+				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num > 64) {
+					cout << "´æÔÚ-rÏî²»¹æ·¶ÎÊÌâ£º¿ÉÄÜÔ­Òò1.·¶Î§ÉèÖÃÓÐÎó2.¸Ã·¶Î§ÎÞ·¨Éú³ÉÎ¨Ò»½â(Çë½«·¶Î§ÉèÖÃÔÚ18-64)" << endl;
 					return;
 				}
 				else {
 					generator.generate(n, begin_num, end_num, isUnion);
-					cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << param1 << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Ú¿Õ·ï¿½Î§ï¿½ï¿½[" << begin_num << "," << end_num << "]Ö®ï¿½ï¿½" << endl;
+					cout << "ÒÑÉú³É" << param1 << "¸ö¾ßÓÐÎ¨Ò»½âÊý¶ÀÓÎÏ·£¬ÍÚ¿Õ·¶Î§ÔÚ[" << begin_num << "," << end_num << "]Ö®¼ä" << endl;
 				}
 			}
 			else if (arg2 == "-m") {
-				//Ñ¡ï¿½ï¿½ï¿½Ñ¶Èµï¿½Ê±ï¿½ò£¬·ï¿½Îª3ï¿½ï¿½
-				/*ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½5-18Ö®ï¿½ï¿½(ï¿½ï¿½Ë²ï¿½ï¿½ï¿½Òªï¿½ï¿½Î¨Ò»ï¿½ï¿½)
-				  ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½18-32Ö®ï¿½ï¿½
-				  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½33-64Ö®ï¿½ï¿½
+				//Ñ¡ÔñÄÑ¶ÈµÄÊ±ºò£¬·ÖÎª3µµ
+				/*µÚÒ»µµ£ºÍÚ¿ÕÔÚ5-18Ö®¼ä(Òò´Ë²»ÄÜÒªÇóÎ¨Ò»½â)
+				  µÚ¶þµµ£ºÍÚ¿ÕÔÚ18-32Ö®¼ä
+				  µÚÈýµµ£ºÍÚ¿ÕÔÚ33-64Ö®¼ä
 				  */
-				int level = isNum(param2);
-
+				type2 = 'm';
+				level = isNum(param2);
 				if (level == 1) {
 					generator.generate(n, 5, 17,true);
 				}
@@ -281,23 +313,23 @@ void InputHandler::check(int argc, char** argv) {
 					generator.generate(n, 33, 64,true);
 				}
 				else {
-					cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¶È²ï¿½ï¿½ï¿½ï¿½Ï¹æ·¶ï¿½ï¿½Ó¦Îª1-3Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "ÊäÈëµÄÄÑ¶È²»·ûºÏ¹æ·¶£¬Ó¦Îª1-3Ö®¼äµÄÕûÊý!" << endl;
 					return;
 				}
 			}
 			else {
-				cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½" << endl;
+				cout << "ÊäÈëÓÐÎó!´æÔÚÎ´¶¨ÒåµÄÑ¡Ïî" << endl;
 				return;
 			}
 		}
 		else {
-			cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+			cout << "ÊäÈëÃüÁîÐÐ¸ñÊ½´íÎó£¬ÇëÖØÐÂÊäÈë!" << endl;
 			return;
 		}
 		
 	}
 	else {
-		cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+	cout << "ÊäÈëÓÐÎó!" << endl;
 	}
 	return;
 }
@@ -317,7 +349,7 @@ int InputHandler::isNum(const string& s) {
 }
 
 void InputHandler::getFinal(int num) {
-	cout << "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½" << num << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+	cout << "¿ªÊ¼Éú³É" << num << "¸öÊý¶ÀÖÕÅÌ!" << endl;
 
 	//Initialize prgress bar
 	milliseconds interval(1000);
@@ -325,9 +357,9 @@ void InputHandler::getFinal(int num) {
 	bar.show();
 
 	//Open output file
-	fstream outfile(absolatePath+FinalPath, ios::out);
+	fstream outfile(absolatePath + FinalPath, ios::out);
 	if (!outfile.is_open()) {
-		cout << "ï¿½Ä¼ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!" << endl;
+		cout << "ÎÄ¼þ´ò¿ªÊ§°Ü!" << endl;
 		return;
 	}
 
@@ -343,7 +375,7 @@ void InputHandler::getFinal(int num) {
 				if ((--num) <= 0) {
 					outfile.close();
 					bar.show();
-					cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
+					cout << "Éú³ÉÍê³É!" << endl;
 					return;
 				}
 				next_permutation(offset + 6, offset + 9);
@@ -357,3 +389,26 @@ void InputHandler::getFinal(int num) {
 	}
 }
 
+int InputHandler::GetNum() {
+	return num;
+}
+
+char InputHandler::GetType1() {
+	return type1;
+}
+
+char InputHandler::GetType2() {
+	return type2;
+}
+
+int InputHandler::GetRange1() {
+	return range1;
+}
+
+int InputHandler::GetRange2() {
+	return range2;
+}
+
+int InputHandler::GetLevel() {
+	return level;
+}
