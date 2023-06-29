@@ -4,18 +4,20 @@
 // Date:2023-6
 // Modify Record:
 #pragma once
+#include<assert.h>
 #include<iostream>
 #include<fstream>
 #include<algorithm>
 #include<stack>
-#include<assert.h>
-using namespace std;
+#include <utility>
+// using namespace std;
+using std::cout;
+using std::endl;
 
-struct SolverHandler
-{
-public:
+struct SolverHandler {
+ public:
     int matrix[9][9] = { 0 };
-    stack<pair<int, int>> blank;    //blank coordinates
+    stack<pair<int, int>> blank; // blank coordinates
     int row[9] = { 0 };
     int col[9] = { 0 };
     int patch[9] = { 0 };
