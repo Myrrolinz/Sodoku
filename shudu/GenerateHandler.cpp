@@ -33,6 +33,7 @@ bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 	infile.close();
 	if (isUnion == false) {
 		for (int i = 0; i < num; i++) {
+			// cout << "generating" << endl;
 			current_HoleNum = generateRandomNumber(beginNum, endNum); // 在范围内随机生成挖空个数
 			holehole(); // 挖current_HoleNum个洞
 			SelectFinal(); // 随机挑选一个终局
@@ -54,9 +55,11 @@ bool Generatehandler::generate(int num, int beginNum, int endNum, bool isUnion) 
 			outfile << endl;
 		}
 		outfile.close();
+		cout << "生成完成!" << endl;
 	} else { // 使用回溯法生成唯一解的数独
 		vector<std::vector<int>> board;
 		for (int t = 0; t < num; t++) { // 在范围内随机生成挖空个数
+			// cout << "generating" << endl;
 			current_HoleNum = generateRandomNumber(beginNum, endNum);
 			generateSudoku(board);
 			holehole();

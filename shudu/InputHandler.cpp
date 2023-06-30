@@ -7,7 +7,6 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include "progress.h"
 #include "SolveHandler.h"
 using namespace std;
 
@@ -37,7 +36,8 @@ void InputHandler::check(int argc, char** argv) {
 			int n = isNum(parameter2);
 			if (n <= 0 || n > 1000000) {
 				cout << "不满足0<n<=1000000!" << endl;
-			} else {
+			}
+			else {
 				// FianlMaker fm;
 				// fm.make(n);
 				type1 = 'c';
@@ -45,8 +45,9 @@ void InputHandler::check(int argc, char** argv) {
 				getFinal(n);
 				cout << "已生成" << parameter2 << "个数独终盘" << endl;
 			}
-		} else if (parameter1 == "-s") {
-			fstream infile(absolatePath+parameter2, ios::in);
+		}
+		else if (parameter1 == "-s") {
+			fstream infile(absolatePath + parameter2, ios::in);
 			fstream outfile(absolatePath + AnsPath, ios::out);
 			type1 = 's';
 			if (!infile.is_open()) {
@@ -60,7 +61,8 @@ void InputHandler::check(int argc, char** argv) {
 				int result = board.solve();
 				if (result == 0) {
 					board.output(outfile);
-				} else {
+				}
+				else {
 					cout << "第" << i << "个数独无解!" << endl;
 					outfile << "No solution" << endl << endl;
 				}
@@ -70,19 +72,22 @@ void InputHandler::check(int argc, char** argv) {
 			cout << "完成求解!" << endl;
 			infile.close();
 			outfile.close();
-		} else if (parameter1 == "-n") {
+		}
+		else if (parameter1 == "-n") {
 			int n = isNum(parameter2);
 			if (n <= 0 || n > 1000)
 				cout << "不满足0<n<=1000000!" << endl;
 			else {
 				generator.generate(n, 18, 64, false);
-				cout << "鐢熸垚缁撴潫锛?" << endl;
+				cout << "生成成功!" << endl;
 				return;
 			}
-		} else {
-			cout << "锟斤拷锟斤拷锟斤拷锟斤拷!" << endl;
 		}
-	} else if (argc == 4) {
+		else {
+			cout << "输入错误，请重新输入!" << endl;
+		}
+	}
+	else if (argc == 4) {
 		string arg1 = argv[1];
 		string arg2 = argv[2];
 		string arg3 = argv[3];
@@ -93,14 +98,16 @@ void InputHandler::check(int argc, char** argv) {
 			if (arg1 == "-u")
 				type1 = 'u';
 			parm1 = arg3;
-		} else if (arg1 == "-n" || arg3 == "-u") {
+		}
+		else if (arg1 == "-n" || arg3 == "-u") {
 			if (arg1 == "-n")
 				type1 = 'n';
 			if (arg3 == "-u")
 				type2 = 'u';
 			parm1 = arg2;
-		} else {
-			cout << "锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟?!" << endl;
+		}
+		else {
+			cout << "输入参数为三个，但不存在-u选项！" << endl;
 			return;
 		}
 		int n = isNum(parm1);
@@ -110,7 +117,8 @@ void InputHandler::check(int argc, char** argv) {
 			return;
 		}
 		generator.generate(n, 18, 64, true);
-	} else if(argc == 5){
+	}
+	else if (argc == 5) {
 		string arg1 = argv[1];
 		string parm1 = argv[2];
 		string arg2 = argv[3];
@@ -127,14 +135,15 @@ void InputHandler::check(int argc, char** argv) {
 				type2 = 'r';
 				string begin, end;
 				bool isBegin = true;
-				//锟斤拷锟斤拷围"a-b"转为锟斤拷a  b
 				for (int i = 0; i < param2.length(); i++) {
 					if (param2[i] == '-') {
 						isBegin = false;
-					} else {
+					}
+					else {
 						if (isBegin) {
 							begin += param2[i];
-						} else {
+						}
+						else {
 							end += param2[i];
 						}
 					}
@@ -147,50 +156,58 @@ void InputHandler::check(int argc, char** argv) {
 				int end_num = isNum(end);
 				range1 = begin_num;
 				range2 = end_num;
-				if (begin_num <= 0 || end_num <= 0|| begin_num > end_num) {
+				if (begin_num <= 0 || end_num <= 0 || begin_num > end_num) {
 					cout << "[-r]项参数不规范，应输入a-b形式的正整数，请重新输入!" << endl;
 					return;
-				} else {
-					generator.generate(n, begin_num, end_num,false);
-					cout << "已生成" << parm1 << "个数独游戏，挖空范围在["<<begin_num<<", "<<end_num<<"]之间" << endl;
 				}
-			} else if (arg2 == "-m") {
+				else {
+					generator.generate(n, begin_num, end_num, false);
+					cout << "已生成" << parm1 << "个数独游戏，挖空范围在[" << begin_num << ", " << end_num << "]之间" << endl;
+					return;
+				}
+			}
+			else if (arg2 == "-m") {
 				// 选择难度的时候，分为3档
 				// 第一档：挖空在5-18之间(因此不能要求唯一解)
-				//  第二档：挖空在18-32之间
-				//  第三档：挖空在33-64之间
+				// 第二档：挖空在18-32之间
+				// 第三档：挖空在33-64之间
 				level = isNum(param2);
 				type2 = 'm';
 				if (level == 1) {
 					cout << "level:" << level << endl;
-					generator.generate(n, 18, 32,false);
-					cout << "鐢熸垚缁撴潫锛?" << endl;
+					generator.generate(n, 18, 32, false);
+					cout << "成功生成!" << endl;
 					return;
-				} else if(level==2)
+				}
+				else if (level == 2)
 				{
-					generator.generate(n, 32, 48,false);
-					cout << "鐢熸垚缁撴潫锛?" << endl;
+					generator.generate(n, 32, 48, false);
+					cout << "成功生成!" << endl;
 					return;
-				} else if (level == 3) {
-					generator.generate(n, 48, 64,false);
-					cout << "鐢熸垚缁撴潫锛?" << endl;
+				}
+				else if (level == 3) {
+					generator.generate(n, 48, 64, false);
+					cout << "成功生成!" << endl;
 					return;
-				} else {
+				}
+				else {
 					cout << "输入的难度不符合规范，应为1-3之间的整数!" << endl;
 					return;
 				}
-				
-			} else {
+
+			}
+			else {
 				cout << "输入有误!存在未定义的选项" << endl;
 				return;
 			}
 		}
-	} else if (argc == 6) {
+	}
+	else if (argc == 6) {
 		//首先需要确定-u的位置
 		int upos = 1;
 		bool isUnion = false;
 		string arg1, param1, arg2, param2;
-		for (int i =0; i < 6; i++) {
+		for (int i = 0; i < 6; i++) {
 			string p = argv[i];
 			if (p == "-u") {
 				upos = i;
@@ -206,17 +223,20 @@ void InputHandler::check(int argc, char** argv) {
 			param1 = argv[3];
 			arg2 = argv[4];
 			param2 = argv[5];
-		} else if (upos == 3) {
+		}
+		else if (upos == 3) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[4];
 			param2 = argv[5];
-		} else if (upos == 5) {
+		}
+		else if (upos == 5) {
 			arg1 = argv[1];
 			param1 = argv[2];
 			arg2 = argv[3];
 			param2 = argv[4];
-		} else {
+		}
+		else {
 			cout << "输入命令行格式错误，请重新输入!" << endl;
 			return;
 		}
@@ -245,10 +265,12 @@ void InputHandler::check(int argc, char** argv) {
 				for (int i = 0; i < param2.length(); i++) {
 					if (param2[i] == '-') {
 						isBegin = false;
-					} else {
+					}
+					else {
 						if (isBegin) {
 							begin += param2[i];
-						} else {
+						}
+						else {
 							end += param2[i];
 						}
 					}
@@ -264,41 +286,51 @@ void InputHandler::check(int argc, char** argv) {
 				if (begin_num <= 17 || end_num <= 0 || begin_num > end_num || begin_num > 64) {
 					cout << "存在-r项不规范问题：可能原因1.范围设置有误2.该范围无法生成唯一解(请将范围设置在18-64)" << endl;
 					return;
-				} else {
+				}
+				else {
 					generator.generate(n, begin_num, end_num, isUnion);
 					cout << "已生成" << param1 << "个具有唯一解数独游戏，挖空范围在[" << begin_num << "," << end_num << "]之间" << endl;
+					return;
 				}
-			} else  if (arg2 == "-m") {
+			}
+			else  if (arg2 == "-m") {
 				// 选择难度的时候，分为3档
 				// 第一档：挖空在5-18之间(因此不能要求唯一解)
 				//  第二档：挖空在18-32之间
 				//  第三档：挖空在33-64之间
-				 
+
 				type2 = 'm';
 				type3 = 'r';
 				level = isNum(param2);
 				if (level == 1) {
-					generator.generate(n, 5, 17,true);
-				} else if (level == 2)
+					generator.generate(n, 18, 32, true);
+				}
+				else if (level == 2)
 				{
-					generator.generate(n, 18, 32,true);
-				} else if (level == 3) {
-					generator.generate(n, 33, 64,true);
-				} else {
+					generator.generate(n, 32, 48, true);
+				}
+				else if (level == 3) {
+					generator.generate(n, 48, 64, true);
+				}
+				else {
 					cout << "输入的难度不符合规范，应为1-3之间的整数!" << endl;
 					return;
 				}
-			} else {
+			}
+			else {
 				cout << "输入有误!存在未定义的选项" << endl;
 				return;
 			}
-		} else {
+		}
+		else {
 			cout << "输入命令行格式错误，请重新输入!" << endl;
 			return;
 		}
-		
-	} else {
-	cout << "输入有误!" << endl;
+
+	}
+	else {
+		cout << "输入有误!" << endl;
+		return;
 	}
 	return;
 }
@@ -311,7 +343,7 @@ int InputHandler::isNum(const string& s) {
 		int ascii = int(s[i]);
 		if (ascii >= 48 && ascii <= 57)
 			continue;
-		else 
+		else
 			return -1;
 	}
 	return stoi(s);
@@ -319,10 +351,7 @@ int InputHandler::isNum(const string& s) {
 
 void InputHandler::getFinal(int num) {
 	cout << "开始生成" << num << "个数独终盘!" << endl;
-	// Initialize prgress bar
-	milliseconds interval(1000);
-	ProgressBar bar((unsigned int)num, interval);
-	bar.show();
+
 	// Open output file
 	fstream outfile(absolatePath + FinalPath, ios::out);
 	if (!outfile.is_open()) {
@@ -337,10 +366,8 @@ void InputHandler::getFinal(int num) {
 			// change the order of line 6-8, 6 arrangements
 			for (int j = 0; j < 6; j++) {
 				output(outfile, head, offset);
-				bar.update();
 				if ((--num) <= 0) {
 					outfile.close();
-					bar.show();
 					cout << "生成完成!" << endl;
 					return;
 				}
@@ -349,9 +376,6 @@ void InputHandler::getFinal(int num) {
 			next_permutation(offset + 3, offset + 6);
 		}
 		next_permutation(head, head + 9);
-		if (num % 100 == 0) {
-			bar.show();
-		}
 	}
 }
 
