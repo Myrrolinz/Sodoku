@@ -1,9 +1,9 @@
-﻿// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
 // Description：Sudoku Game
 // Author：GYM, SJQ
 // Date:2023-6
 // Modify Record:
-#include "GenerateHandler.h"
+#include "GenerateHandler.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>

@@ -1,4 +1,4 @@
-﻿// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
+// (C) Copyright 2023 Yunmei Guan, Jiaqi Shi
 // Description：Sudoku Game
 // Author：GYM, SJQ
 // Date:2023-6
@@ -6,8 +6,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "GenerateHandler.h"
 #include "SolveHandler.h"
+#include "GenerateHandler.hpp"
 using namespace std;
 
 class InputHandler {
