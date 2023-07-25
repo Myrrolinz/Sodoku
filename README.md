@@ -1,5 +1,9 @@
 # 数独控制台程序
 
+NKU 2023 软件工程 结对编程作业; NKU 2023 Software Engineering Assignment
+
+This code is a Sudoku game with the following functionalities: generating Sudoku puzzles, solving Sudoku puzzles, customizing different difficulty levels, generating puzzles with a unique solution, and limiting the scope of blank cells.
+
 - 姓名：管昀玫、石家琪
 - 学号：2013750、2011739
 - 专业：计算机科学与技术
